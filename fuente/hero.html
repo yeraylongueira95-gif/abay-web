@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ABAY — Performance Center · A Coruña</title>
+<style>
+@font-face{
+  font-family:'Space Grotesk';
+  src:url(data:font/woff2;base64,__SG500__) format('woff2');
+  font-weight:500;font-style:normal;font-display:block;
+}
+:root{
+  --ink:#050608;
+  --charcoal:#0e1114;
+  --stone:#9aa1a6;
+  --stone-dim:#697077;
+  --warm:#f3efe7;
+  --beam:#f6eedd;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--ink);overflow:hidden}
+body{font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block}
+
+/* ---------- brand lockup ---------- */
+#brand{
+  position:fixed;left:50%;top:46%;
+  transform:translate(-50%,-50%);
+  width:min(34vw,560px);
+  min-width:300px;
+  opacity:0;
+  pointer-events:none;
+}
+@media (max-width:720px){
+  #brand{width:72vw;min-width:0}
+}
+#brand svg{display:block;width:100%;height:auto;overflow:visible}
+
+#sub1,#sub2{
+  position:relative;text-align:center;
+  color:var(--stone);font-weight:500;
+  letter-spacing:.46em;text-indent:.46em;
+  font-size:clamp(10px,1.05vw,13px);
+  opacity:0;transform:translateY(8px);
+}
+#sub1{margin-top:8.5%}
+#sub2{
+  color:var(--stone-dim);
+  font-size:clamp(9px,.85vw,11px);
+  letter-spacing:.34em;text-indent:.34em;
+  margin-top:1em;
+}
+
+/* ---------- grain ---------- */
+#grain{
+  position:fixed;inset:-60px;
+  pointer-events:none;z-index:30;
+  opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1.1s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}17%{transform:translate(-18px,12px)}
+  34%{transform:translate(12px,-20px)}51%{transform:translate(-10px,-14px)}
+  68%{transform:translate(16px,10px)}85%{transform:translate(-14px,18px)}
+  100%{transform:translate(0,0)}
+}
+
+/* ---------- replay ---------- */
+#replay{
+  position:fixed;right:clamp(16px,3vw,36px);bottom:clamp(16px,3vw,32px);z-index:40;
+  background:none;border:1px solid rgba(154,161,166,.28);
+  color:var(--stone);font-family:inherit;font-weight:500;
+  font-size:10px;letter-spacing:.32em;text-indent:.32em;
+  padding:.85em 1.3em .8em 1.05em;
+  cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .8s ease,border-color .3s ease,color .3s ease;
+}
+#replay.on{opacity:.6;pointer-events:auto}
+#replay:hover{opacity:1;border-color:rgba(243,239,231,.55);color:var(--warm)}
+#replay:focus-visible{outline:1px solid var(--warm);outline-offset:3px;opacity:1}
+
+@media (prefers-reduced-motion:reduce){
+  #grain{animation:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<div id="brand" role="img" aria-label="ABAY Performance Center">
+  <svg viewBox="0 0 980 710" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="carve" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur id="carveBlur" stdDeviation="16"/>
+      </filter>
+      <filter id="lb0" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="lbG0" stdDeviation="0"/></filter><filter id="lb1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="lbG1" stdDeviation="0"/></filter><filter id="lb2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="lbG2" stdDeviation="0"/></filter><filter id="lb3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="lbG3" stdDeviation="0"/></filter>
+    </defs>
+
+    <!-- group that blurs from light into focus -->
+    <g id="carveGroup" filter="url(#carve)">
+      <!-- SPARK (isotipo oficial, potrace de Sin_titulo2.png, viewBox nativo 1113x619) -->
+      <!-- ancho 0.414 * 980 = 405.7 ; alto = 405.7*619/1113 = 225.6 ; centro x = 490 + 0.073*980 = 561.5 -->
+      <g id="spark" transform="translate(358.6,0) scale(0.3645)">
+        <g transform="translate(0,619) scale(0.1,-0.1)" fill="var(--logo,#f3efe7)">
+          <path d="M10645 5924 c-236 -124 -518 -270 -625 -326 -107 -55 -292 -151 -410 -213 -118 -62 -291 -152 -385 -200 -93 -49 -318 -166 -500 -260 -181 -95 -442 -231 -580 -302 -137 -72 -308 -166 -380 -210 -447 -274 -847 -455 -1172 -528 -403 -92 -775 14 -1130 323 -79 68 -383 312 -557 447 -28 21 -159 125 -291 230 -132 105 -252 199 -267 210 -45 34 -871 687 -912 722 -22 18 -43 33 -46 33 -4 0 -13 -64 -19 -142 -7 -79 -14 -161 -16 -183 -3 -22 -11 -123 -20 -225 -46 -552 -60 -652 -122 -845 -41 -129 -140 -339 -211 -445 -27 -41 -301 -411 -608 -822 -308 -410 -788 -1054 -1069 -1429 -280 -376 -684 -915 -896 -1198 -212 -284 -385 -517 -383 -519 1 -2 13 3 26 11 12 8 259 141 548 295 289 153 725 386 970 517 245 131 777 415 1183 632 407 217 789 421 850 454 298 160 746 373 884 420 157 53 232 64 433 64 197 -1 272 -12 476 -70 337 -97 701 -336 969 -635 336 -375 871 -846 1396 -1229 96 -70 125 -87 126 -73 2 9 12 197 23 417 22 433 31 538 61 715 65 380 213 778 415 1111 146 243 472 712 779 1124 282 377 853 1103 1110 1410 27 34 140 169 250 300 215 258 482 573 523 618 14 15 22 27 16 26 -5 0 -202 -101 -439 -225z"/>
+        </g>
+      </g>
+
+      <!-- WORDMARK (logotipo horizontal oficial): cada letra nace de la luz -->
+      <g id="wordmark" transform="translate(0,709) scale(0.1,-0.1)" fill="var(--logo,#f3efe7)">
+          <g class="wmL" filter="url(#lb0)"><path d="M1120 2612 c-125 -33 -212 -103 -274 -221 -19 -36 -78 -190 -131 -341 -53 -151 -117 -331 -142 -400 -40 -110 -153 -427 -318 -895 -29 -82 -97 -271 -149 -420 -53 -148 -96 -273 -96 -278 0 -4 98 -6 217 -5 l218 3 132 370 c72 204 234 658 358 1010 125 352 236 657 247 678 34 68 128 86 175 34 30 -33 27 -24 143 -370 60 -177 181 -536 270 -797 89 -261 196 -576 239 -700 l76 -225 224 -3 c210 -2 223 -1 216 15 -4 10 -59 169 -122 353 -63 184 -145 425 -183 535 -38 110 -159 464 -269 788 -111 323 -215 615 -232 648 -60 121 -163 199 -297 228 -77 16 -226 13 -302 -7z"/></g>
+          <g class="wmL" filter="url(#lb1)"><path d="M2951 2558 c-31 -16 -51 -36 -65 -63 -21 -40 -21 -52 -24 -1135 -2 -602 0 -1118 3 -1147 7 -57 34 -104 78 -137 28 -21 38 -21 600 -24 601 -3 701 1 827 40 231 71 382 228 436 453 11 47 17 114 18 200 0 143 -19 237 -71 338 -32 64 -153 185 -210 212 -24 11 -43 23 -43 26 0 4 30 24 66 45 115 67 192 175 231 324 23 91 23 310 -1 405 -61 240 -215 390 -466 457 -83 21 -100 22 -710 25 l-625 4 -44 -23z m1204 -419 c109 -20 177 -67 223 -154 24 -46 27 -60 27 -165 0 -104 -2 -120 -25 -165 -28 -53 -91 -104 -158 -127 -26 -8 -172 -13 -504 -15 l-468 -4 0 302 c0 267 2 305 17 321 15 17 41 18 423 18 251 0 429 -4 465 -11z m54 -1013 c149 -40 217 -147 209 -329 -6 -145 -62 -233 -177 -279 -55 -22 -66 -23 -511 -26 -423 -3 -455 -2 -467 14 -10 14 -13 92 -13 326 l0 308 453 0 c359 0 463 -3 506 -14z"/></g>
+          <g class="wmL" filter="url(#lb2)"><path d="M6381 2600 c-92 -25 -144 -54 -203 -118 -65 -69 -84 -113 -208 -460 -59 -169 -180 -509 -268 -757 -320 -900 -432 -1217 -432 -1221 0 -2 99 -4 219 -4 219 0 220 0 226 23 7 22 95 271 383 1082 88 248 197 556 242 685 46 129 92 252 102 273 34 68 127 86 176 34 29 -31 33 -42 180 -477 72 -212 203 -599 292 -860 89 -261 183 -538 209 -615 l48 -140 221 -3 c122 -1 222 -1 222 1 0 2 -9 30 -21 63 -11 32 -61 176 -109 319 -49 143 -168 492 -265 775 -97 283 -224 655 -282 825 -57 171 -118 335 -135 367 -36 69 -103 136 -168 172 -103 56 -291 72 -429 36z"/></g>
+          <g class="wmL" filter="url(#lb3)"><path d="M7587 2538 c33 -54 293 -461 632 -992 l261 -409 0 -544 0 -543 200 0 200 0 0 547 0 546 49 76 c58 91 696 1091 793 1243 37 59 68 109 68 112 0 4 -105 6 -233 6 l-234 0 -198 -332 c-385 -648 -440 -738 -447 -736 -6 3 -455 758 -591 995 l-42 73 -243 0 -242 0 27 -42z"/></g>
+      </g>
+    </g>
+  </svg>
+  <div id="sub1">PERFORMANCE CENTER</div>
+  <div id="sub2">A CORUÑA · MONTE ALTO</div>
+</div>
+
+  <div id="subSpacer" style="width:100%;padding-top:63.3%"></div>
+  <div id="sub1">PERFORMANCE CENTER</div>
+  <div id="sub2">A CORUÑA · MONTE ALTO</div>
+</div>
+
+<div id="grain" aria-hidden="true"></div>
+
+<button id="replay" type="button" aria-label="Repetir animación">&#8634;&nbsp;&nbsp;REPETIR</button>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   ABAY — "El Faro"
+   Hero cinematográfico: la Torre de Hércules emerge de la
+   oscuridad; el haz del faro se enciende, barre el encuadre y,
+   al cruzar la mirada del espectador, talla el isotipo en luz.
+   ============================================================ */
+
+const cv  = document.getElementById('scene');
+const ctx = cv.getContext('2d');
+const brand   = document.getElementById('brand');
+const carveBlur = document.getElementById('carveBlur');
+const wmLetters = document.querySelectorAll('#wordmark .wmL');
+const wmBlurs   = [0,1,2,3].map(i=>document.getElementById('lbG'+i));
+const sub1 = document.getElementById('sub1');
+const sub2 = document.getElementById('sub2');
+const replayBtn = document.getElementById('replay');
+
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- timeline (segundos) ---------- */
+const T = {
+  towerIn : 0.15,  towerFull: 1.15,
+  flick1  : 1.25,  flick2   : 1.44,
+  ignite  : 1.60,
+  hit     : 3.00,                  // el haz cruza al espectador (= ignite + periodo/2)
+  sparkIn : 3.00,  sparkDone: 3.75,
+  wmIn    : 3.80,  wmDone   : 4.50,
+  s1In    : 4.60,  s2In     : 4.82,
+  ambient : 5.40,
+  replay  : 5.90
+};
+const SWEEP_PERIOD  = 2.8;   // rotación del haz (intro)
+const AMBIENT_PERIOD= 15.0;  // rotación residual (final)
+
+/* ---------- utilidades ---------- */
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp  = (a,b,t)=>a+(b-a)*t;
+const smooth= t=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+const ease  = (t,a,b)=>smooth((t-a)/(b-a));
+const easeOutCubic = t=>{t=clamp(t,0,1);return 1-Math.pow(1-t,3);};
+
+/* ---------- estado ---------- */
+let W=0,H=0,DPR=1, portrait=false;
+let horizon=0, tower=null, mist=[], glints=[];
+let sparkPt={x:0,y:0};
+let t0=performance.now(), paused=false, done=false;
+let seed=1; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+
+function resize(){
+  DPR = Math.min(devicePixelRatio||1, 2);
+  W = innerWidth; H = innerHeight;
+  portrait = H > W*1.05;
+  cv.width = W*DPR; cv.height = H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+
+  horizon = portrait ? H*0.74 : H*0.78;
+  // centro del isotipo en pantalla: linterna, haz y destello se alinean a su altura
+  const r = brand.querySelector('svg').getBoundingClientRect();
+  sparkPt = { x: r.left + r.width*(561.5/980), y: r.top + r.height*(113/710) };
+  buildTower(); buildMist(); buildGlints();
+}
+
+/* ---------- Torre de Hércules: silueta escultórica ----------
+   Proporciones respetadas: fuste romano de planta cuadrada con
+   ligero afinamiento, cornisa, cuerpo octogonal superior,
+   linterna y cúpula. Sin distorsión, sin detalle turístico. */
+function buildTower(){
+  /* Perfil medido sobre fotografía real de la Torre de Hércules.
+     th = altura desde la base del fuste hasta la punta del obelisco. */
+  const by = horizon + 2;
+  const LAMP_K = (0.21 + 0.010 + 0.012) + (0.527 + 0.082 + 0.122 + 0.111 + 0.022 + 0.049/2);
+  const th = clamp((by - sparkPt.y) / LAMP_K, H*0.30, H*0.56);
+  const bx = (portrait? 0.60 : 0.645) * W;
+
+  /* el monte de la Torre: elevación suave sobre el mar */
+  const hillH = th*0.21;
+  const crest = by - hillH;
+  const plinthY = crest - th*0.010;
+  const base = plinthY - th*0.012;
+
+  /* fuste romano: 0.281·th en base, afinando a 0.243·th */
+  const wB = th*0.281, wT = th*0.243;
+  const hShaft = th*0.527;
+  const yShaftTop = base - hShaft;
+
+  /* gran cornisa acampanada (trompeta a 1.35× el fuste) */
+  const flareW = th*0.381, hFlare = th*0.082, flareBand = th*0.014;
+  const yFlareTop = yShaftTop - hFlare;
+
+  /* 1er cuerpo octogonal + su cornisa */
+  const o1 = th*0.159/2, hO1 = th*0.122;
+  const c1 = th*0.177/2, hC1 = th*0.022;
+  const yO1Top = yFlareTop - hO1;
+
+  /* tambor octogonal */
+  const dr = th*0.102/2, hDr = th*0.111;
+  const yDrTop = yO1Top - hDr;
+
+  /* galería + linterna de cristal + casquete */
+  const ga = th*0.111/2, hGa = th*0.022;
+  const gl = th*0.080/2, hGl = th*0.049;
+  const yGaTop = yDrTop - hGa;
+  const yGlTop = yGaTop - hGl;
+  const hCap = th*0.020;
+  const yCap = yGlTop - hCap;
+
+  /* obelisco cónico de piedra */
+  const spB = th*0.026/2, hSp = th*0.092;
+  const ySpTip = yCap - hSp;
+
+  const hill = new Path2D();
+  hill.moveTo(bx - th*1.75, by+3);
+  hill.bezierCurveTo(bx - th*1.10, by - hillH*0.28,
+                     bx - th*0.72, crest + th*0.010,
+                     bx - wB*1.15, crest);
+  hill.lineTo(bx + wB*1.15, crest);
+  hill.bezierCurveTo(bx + th*0.62, crest + th*0.014,
+                     bx + th*0.95, by - hillH*0.22,
+                     bx + th*1.55, by+3);
+  hill.closePath();
+
+  const p = new Path2D();
+  // explanada bastionada coronando el monte
+  p.moveTo(bx - wB*1.30, crest + th*0.012); p.lineTo(bx - wB*1.12, base); p.lineTo(bx + wB*1.12, base);
+  p.lineTo(bx + wB*1.30, crest + th*0.012); p.closePath();
+
+  // torre: subida izquierda, bajada derecha
+  p.moveTo(bx - wB/2, base);
+  p.lineTo(bx - wT/2, yShaftTop);
+  // cornisa en trompeta: curva cóncava hacia fuera
+  p.bezierCurveTo(bx - wT/2 - th*0.010, yShaftTop - hFlare*0.62,
+                  bx - flareW/2 + th*0.012, yShaftTop - hFlare*0.72,
+                  bx - flareW/2, yFlareTop + flareBand);
+  p.lineTo(bx - flareW/2, yFlareTop);
+  p.lineTo(bx - o1, yFlareTop);
+  p.lineTo(bx - o1, yO1Top + hC1);
+  // cornisa del octógono
+  p.lineTo(bx - c1, yO1Top + hC1*0.6);
+  p.lineTo(bx - c1, yO1Top);
+  p.lineTo(bx - dr, yO1Top);
+  p.lineTo(bx - dr, yDrTop);
+  // galería
+  p.lineTo(bx - ga, yDrTop);
+  p.lineTo(bx - ga, yGaTop);
+  // linterna
+  p.lineTo(bx - gl, yGaTop);
+  p.lineTo(bx - gl, yGlTop);
+  // casquete
+  p.bezierCurveTo(bx - gl, yCap + hCap*0.2, bx - spB*1.6, yCap, bx - spB, yCap);
+  // obelisco (lado izq)
+  p.lineTo(bx - th*0.0025, ySpTip);
+  p.lineTo(bx + th*0.0025, ySpTip);
+  // obelisco (lado dcho) y bajada simétrica
+  p.lineTo(bx + spB, yCap);
+  p.bezierCurveTo(bx + spB*1.6, yCap, bx + gl, yCap + hCap*0.2, bx + gl, yGlTop);
+  p.lineTo(bx + gl, yGaTop);
+  p.lineTo(bx + ga, yGaTop);
+  p.lineTo(bx + ga, yDrTop);
+  p.lineTo(bx + dr, yDrTop);
+  p.lineTo(bx + dr, yO1Top);
+  p.lineTo(bx + c1, yO1Top);
+  p.lineTo(bx + c1, yO1Top + hC1*0.6);
+  p.lineTo(bx + o1, yO1Top + hC1);
+  p.lineTo(bx + o1, yFlareTop);
+  p.lineTo(bx + flareW/2, yFlareTop);
+  p.lineTo(bx + flareW/2, yFlareTop + flareBand);
+  p.bezierCurveTo(bx + flareW/2 - th*0.012, yShaftTop - hFlare*0.72,
+                  bx + wT/2 + th*0.010, yShaftTop - hFlare*0.62,
+                  bx + wT/2, yShaftTop);
+  p.lineTo(bx + wB/2, base);
+  p.closePath();
+
+  // torreón de esquina con cúpula de piedra (sobre la terraza del octógono, a la derecha)
+  const tuX = bx + th*0.063, tuW = th*0.054, tuBase = yO1Top, tuTop = tuBase - th*0.052;
+  p.moveTo(tuX - tuW/2, tuBase);
+  p.lineTo(tuX - tuW/2, tuTop);
+  p.bezierCurveTo(tuX - tuW/2, tuTop - th*0.036, tuX + tuW/2, tuTop - th*0.036, tuX + tuW/2, tuTop);
+  p.lineTo(tuX + tuW/2, tuBase);
+  p.closePath();
+  p.moveTo(tuX - th*0.0025, tuTop - th*0.026);
+  p.lineTo(tuX - th*0.0025, tuTop - th*0.042);
+  p.lineTo(tuX + th*0.0025, tuTop - th*0.042);
+  p.lineTo(tuX + th*0.0025, tuTop - th*0.026);
+  p.closePath();
+
+  const fin = new Path2D();  // (integrado en el path principal)
+
+  tower = { path:p, fin, hill, bx, by, th,
+            lampX:bx, lampY:(yGaTop+yGlTop)/2,
+            edgeL:{x1:bx-wB/2, y1:base, x2:bx-wT/2, y2:yShaftTop} };
+}
+
+function buildMist(){
+  mist = []; seed = 7;
+  const n = portrait? 26 : 38;
+  for(let i=0;i<n;i++){
+    mist.push({
+      x: rnd()*W*1.3 - W*0.15,
+      y: horizon - rnd()*H*0.55,
+      r: lerp(H*0.10, H*0.34, rnd()),
+      v: lerp(2.5, 9, rnd()) * (rnd()>0.5?1:-1),
+      a: lerp(0.015, 0.045, rnd())
+    });
+  }
+}
+function buildGlints(){
+  glints = []; seed = 21;
+  const n = portrait? 26 : 44;
+  for(let i=0;i<n;i++){
+    glints.push({
+      x: rnd()*W, y: horizon + 4 + rnd()*(H-horizon)*0.85,
+      len: lerp(W*0.015, W*0.075, rnd()),
+      ph: rnd()*6.283, sp: lerp(0.25,0.7,rnd()),
+      a: lerp(0.03,0.10,rnd())
+    });
+  }
+}
+
+/* ---------- fases del haz ---------- */
+function beamPhase(t){
+  if(t < T.ignite) return null;
+  if(t < T.ambient){
+    // fase calibrada: sin(phase)=1 exactamente en T.hit
+    const ph = (t - T.ignite)/SWEEP_PERIOD * Math.PI*2 - Math.PI/2;
+    return {ph, ambient:false};
+  }
+  const ph = (t - T.ambient)/AMBIENT_PERIOD * Math.PI*2 + Math.PI*0.75;
+  return {ph, ambient:true};
+}
+
+/* ---------- dibujo ---------- */
+function draw(t){
+  const reveal = ease(t, T.towerIn, T.towerFull);          // aparición del mundo
+  const endDim = 1 - 0.90*ease(t, T.hit, T.sparkDone);     // el mundo se retira tras el destello
+  const camS   = REDUCED?1: lerp(1.065, 1.0, easeOutCubic(clamp((t)/4.5,0,1)));
+
+  ctx.clearRect(0,0,W,H);
+  ctx.save();
+  ctx.translate(W/2, H*0.62);
+  ctx.scale(camS, camS);
+  ctx.translate(-W/2, -H*0.62);
+
+  /* cielo */
+  const skyA = (0.10 + 0.90*reveal) * (0.18 + 0.82*endDim);
+  let g = ctx.createLinearGradient(0,0,0,horizon);
+  g.addColorStop(0,   `rgba(3,4,6,1)`);
+  g.addColorStop(0.62,`rgba(${7*skyA+3|0},${9*skyA+4|0},${13*skyA+5|0},1)`);
+  g.addColorStop(1,   `rgba(${14*skyA+4|0},${19*skyA+5|0},${28*skyA+6|0},1)`);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,horizon+1);
+
+  /* mar */
+  g = ctx.createLinearGradient(0,horizon,0,H);
+  g.addColorStop(0, `rgba(${10*skyA+3|0},${14*skyA+4|0},${20*skyA+5|0},1)`);
+  g.addColorStop(1, `rgba(2,3,4,1)`);
+  ctx.fillStyle=g; ctx.fillRect(0,horizon,W,H-horizon);
+
+  /* línea de horizonte, apenas */
+  ctx.fillStyle=`rgba(154,161,166,${0.05*reveal*endDim})`;
+  ctx.fillRect(0,horizon,W,1);
+
+  const bp = beamPhase(t);
+  const dim = bp && bp.ambient ? 0.09 : 1;
+  let shaftA=0, flare=0, beamAng=0;
+  if(bp){
+    const s=Math.sin(bp.ph), c=Math.cos(bp.ph);
+    flare  = Math.pow(clamp(s,0,1), 8) * dim;
+    if(!bp.ambient){
+      // pulso garantizado en el instante en que el haz cruza la mirada
+      const pulse = Math.exp(-Math.pow((t-T.hit)/0.17, 2));
+      flare = Math.max(flare, pulse);
+    }
+    shaftA = (0.10 + 0.55*clamp(s,-0.2,1) + 0.35*Math.abs(c)) * dim;
+    shaftA *= (1 - 0.85*flare);   // con la luz en los ojos, el fuste desaparece
+    if(!bp.ambient) shaftA *= 1 - 0.72*ease(t, T.sparkDone, T.ambient); // la luz se retira ante la marca
+    beamAng = bp.ph;
+    // parpadeo de ignición
+    if(!bp.ambient && t < T.ignite+0.35) shaftA *= ease(t,T.ignite,T.ignite+0.35);
+  }
+  // pre-parpadeos del arco
+  let preFlick = 0;
+  if(t>T.flick1 && t<T.flick1+0.07) preFlick=0.5;
+  if(t>T.flick2 && t<T.flick2+0.09) preFlick=0.8;
+
+  /* destellos del mar */
+  const glintBoost = bp? shaftA*0.6 : 0;
+  for(const q of glints){
+    const tw = 0.5+0.5*Math.sin(t*q.sp*2+q.ph);
+    const a = q.a * tw * reveal * (0.25+0.75*endDim) * (1+glintBoost);
+    if(a<0.004) continue;
+    ctx.strokeStyle=`rgba(214,222,228,${a})`;
+    ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(q.x-q.len/2,q.y); ctx.lineTo(q.x+q.len/2,q.y); ctx.stroke();
+  }
+
+  /* niebla (capa trasera) */
+  drawMist(t, reveal*endDim, bp, beamAng, shaftA, false);
+
+  /* monte + torre */
+  const tA = reveal * (0.08 + 0.92*endDim);
+  if(tA>0.01 && tower){
+    ctx.save();
+    ctx.globalAlpha = tA;
+    ctx.fillStyle = '#070b10';
+    ctx.fill(tower.hill);
+    // hierba del monte rozada por la luz: línea de cresta apenas insinuada
+    ctx.fillStyle = '#04070a';
+    ctx.fill(tower.path); ctx.fill(tower.fin);
+    // luz de canto (rim) sobre la arista de barlovento
+    const rim = 0.20*reveal*endDim + (bp? shaftA*0.25:0) + preFlick*0.15;
+    if(rim>0.02){
+      const e=tower.edgeL;
+      const rg=ctx.createLinearGradient(e.x1,e.y1,e.x2,e.y2);
+      rg.addColorStop(0,`rgba(190,200,208,0)`);
+      rg.addColorStop(0.75,`rgba(206,214,220,${rim*0.5})`);
+      rg.addColorStop(1,`rgba(228,234,238,${rim})`);
+      ctx.strokeStyle=rg; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.moveTo(e.x1,e.y1); ctx.lineTo(e.x2,e.y2); ctx.stroke();
+      // traza sutil de la rampa helicoidal histórica
+      ctx.strokeStyle=`rgba(180,190,198,${rim*0.16})`;
+      ctx.lineWidth=1;
+      ctx.beginPath();
+      ctx.moveTo(e.x1+ (e.x2-e.x1)*0.15, lerp(e.y1,e.y2,0.10));
+      ctx.lineTo(tower.bx + (tower.bx-e.x2)*0.9, lerp(e.y1,e.y2,0.52));
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /* linterna: punto de luz */
+  if(bp || preFlick>0){
+    const lampA = clamp((bp? (0.55+0.45*shaftA)*(bp.ambient?0.5:1) : 0)*dim + preFlick, 0, 1);
+    const {lampX,lampY}=tower;
+    const lg=ctx.createRadialGradient(lampX,lampY,0,lampX,lampY,tower.th*0.060);
+    lg.addColorStop(0,`rgba(246,238,221,${0.95*lampA})`);
+    lg.addColorStop(0.25,`rgba(246,238,221,${0.30*lampA})`);
+    lg.addColorStop(1,'rgba(246,238,221,0)');
+    ctx.fillStyle=lg;
+    ctx.beginPath(); ctx.arc(lampX,lampY,tower.th*0.060,0,6.283); ctx.fill();
+  }
+
+  /* haz volumétrico (recortado al cielo) */
+  if(bp && shaftA>0.01){
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0,0,W,horizon+10); ctx.clip();
+    drawBeam(tower.lampX, tower.lampY, beamAng, shaftA, bp.ambient);
+    ctx.restore();
+    /* reflejo en el mar: columna suave, sin bordes */
+    const refA = shaftA*0.16*(1-flare);
+    if(refA>0.004){
+      ctx.save();
+      ctx.translate(tower.lampX, horizon+2);
+      ctx.scale(1, 5.5);
+      const rr = tower.th*0.13;
+      const rg=ctx.createRadialGradient(0,0,0,0,0,rr);
+      rg.addColorStop(0,`rgba(246,238,221,${refA})`);
+      rg.addColorStop(1,'rgba(246,238,221,0)');
+      ctx.fillStyle=rg;
+      ctx.beginPath(); ctx.rect(-rr,0,rr*2,rr); ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* niebla (capa delantera, iluminada por el haz) */
+  drawMist(t, reveal*endDim, bp, beamAng, shaftA, true);
+
+  ctx.restore();
+
+  /* destello a cámara: esfera de luz que nace de la linterna de la Torre.
+     Redondo, sin bandas; el vector se materializa dentro de esta luz. */
+  if(flare>0.003){
+    const fx = tower.lampX, fy = tower.lampY;
+    const R = Math.min(W,H)*0.92;
+    const fg=ctx.createRadialGradient(fx,fy,0,fx,fy,R);
+    fg.addColorStop(0,   `rgba(253,250,242,${0.98*flare})`);
+    fg.addColorStop(0.18,`rgba(250,245,234,${0.80*flare})`);
+    fg.addColorStop(0.45,`rgba(247,241,228,${0.38*flare})`);
+    fg.addColorStop(1,'rgba(244,238,224,0)');
+    ctx.fillStyle=fg;
+    ctx.beginPath(); ctx.arc(fx,fy,R,0,6.283); ctx.fill();
+    // veladura global mínima para el pico
+    ctx.fillStyle=`rgba(246,240,226,${0.22*flare})`;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  /* halo residual tras el logo (marco vivo) */
+  const after = ease(t, T.sparkDone, T.ambient);
+  if(after>0.01){
+    const gx=sparkPt.x, gy=sparkPt.y;
+    const hg=ctx.createRadialGradient(gx,gy,0,gx,gy,Math.max(W,H)*0.62);
+    const ha=0.045*after*(bp&&bp.ambient? (0.7+0.3*Math.sin(bp.ph)) : 1);
+    hg.addColorStop(0,`rgba(246,238,221,${ha})`);
+    hg.addColorStop(1,'rgba(246,238,221,0)');
+    ctx.fillStyle=hg; ctx.fillRect(0,0,W,H);
+  }
+
+  /* viñeta */
+  const vg=ctx.createRadialGradient(W/2,H*0.52,Math.min(W,H)*0.34,W/2,H*0.52,Math.max(W,H)*0.82);
+  vg.addColorStop(0,'rgba(0,0,0,0)');
+  vg.addColorStop(1,'rgba(2,3,4,0.55)');
+  ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+}
+
+function drawMist(t, base, bp, ang, shaftA, front){
+  const list = front? mist.filter((_,i)=>i%3===0) : mist.filter((_,i)=>i%3!==0);
+  for(const m of list){
+    let x = m.x + Math.sin(t*0.05+m.y)*8 + t*m.v;
+    x = ((x % (W*1.3)) + W*1.3) % (W*1.3) - W*0.15;
+    let a = m.a * base;
+    // iluminación dentro del haz
+    if(bp && shaftA>0.02 && tower){
+      const dx=x-tower.lampX, dy=m.y-tower.lampY;
+      const pa=Math.atan2(dy*3.6, dx);       // compensa el aplastamiento del haz
+      const d=Math.abs(Math.atan2(Math.sin(pa-ang),Math.cos(pa-ang)));
+      if(d<0.5) a += m.a*3.2*shaftA*(1-d/0.5);
+    }
+    if(a<0.004) continue;
+    const gAlpha = Math.min(a, 0.28);
+    const mg=ctx.createRadialGradient(x,m.y,0,x,m.y,m.r);
+    mg.addColorStop(0,`rgba(150,162,172,${gAlpha})`);
+    mg.addColorStop(1,'rgba(150,162,172,0)');
+    ctx.fillStyle=mg;
+    ctx.beginPath(); ctx.arc(x,m.y,m.r,0,6.283); ctx.fill();
+  }
+}
+
+function drawBeam(lx,ly,ang,alpha,ambient){
+  const len = Math.max(W,H)*1.25;
+  ctx.save();
+  ctx.translate(lx,ly);
+  ctx.scale(1,0.28);                 // plano de barrido en perspectiva
+  ctx.rotate(ang);
+  const spread = 0.075;              // semiángulo del haz
+  for(let i=3;i>=1;i--){
+    const s=spread*i/3, a=alpha*(0.16/i);
+    const gg=ctx.createLinearGradient(0,0,len,0);
+    gg.addColorStop(0,`rgba(246,238,221,${a*1.4})`);
+    gg.addColorStop(0.35,`rgba(246,238,221,${a})`);
+    gg.addColorStop(1,'rgba(246,238,221,0)');
+    ctx.fillStyle=gg;
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(Math.cos(-s)*len, Math.sin(-s)*len);
+    ctx.lineTo(Math.cos(s)*len, Math.sin(s)*len);
+    ctx.closePath(); ctx.fill();
+  }
+  // contra-haz tenue (fuga de la óptica)
+  ctx.rotate(Math.PI);
+  const ca=alpha*0.05;
+  const cg=ctx.createLinearGradient(0,0,len*0.7,0);
+  cg.addColorStop(0,`rgba(246,238,221,${ca})`);
+  cg.addColorStop(1,'rgba(246,238,221,0)');
+  ctx.fillStyle=cg;
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.lineTo(Math.cos(-spread)*len*0.7, Math.sin(-spread)*len*0.7);
+  ctx.lineTo(Math.cos(spread)*len*0.7, Math.sin(spread)*len*0.7);
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+/* ---------- revelado del logotipo (DOM/SVG) ---------- */
+function updateBrand(t){
+  // isotipo: nace de la luz — desenfocado y luminoso, luego nítido
+  const si = ease(t, T.sparkIn, T.sparkIn+0.5);
+  const sf = ease(t, T.sparkIn+0.25, T.sparkDone);
+  brand.style.opacity = si;
+  carveBlur.setAttribute('stdDeviation', String(16*(1-sf)));
+  brand.style.transform = 'translate(-50%,-50%)';
+
+  // logotipo: A·B·A·Y nacen de la luz en cascada
+  for(let i=0;i<wmLetters.length;i++){
+    const s = T.wmIn + i*0.09;
+    const o = ease(t, s, s+0.30);
+    const f = ease(t, s, s+0.42);
+    wmLetters[i].setAttribute('opacity', String(o));
+    wmBlurs[i].setAttribute('stdDeviation', String(60*(1-f)));
+  }
+
+  sub1.style.opacity = ease(t, T.s1In, T.s1In+0.7);
+  sub1.style.transform = `translateY(${8*(1-ease(t,T.s1In,T.s1In+0.7))}px)`;
+  sub2.style.opacity = 0.9*ease(t, T.s2In, T.s2In+0.7);
+  sub2.style.transform = `translateY(${8*(1-ease(t,T.s2In,T.s2In+0.7))}px)`;
+
+  if(t>T.replay && !replayBtn.classList.contains('on')){
+    replayBtn.classList.add('on');
+    if(!window.__fx0){ window.__fx0 = performance.now(); }
+  }
+}
+
+function finalFrame(){
+  draw(T.ambient+3);
+  updateBrand(T.ambient+3);
+  replayBtn.classList.add('on');
+  window.__fx0 = performance.now();
+}
+
+/* ---------- bucle ---------- */
+let raf=0;
+function loop(now){
+  if(paused) return;
+  const t=(now-t0)/1000;
+  draw(t);
+  updateBrand(t);
+  raf=requestAnimationFrame(loop);
+}
+
+function start(){
+  cancelAnimationFrame(raf);
+  replayBtn.classList.remove('on');
+  window.__fx0 = undefined;
+  sub1.style.opacity=0; sub2.style.opacity=0; brand.style.opacity=0;
+  t0=performance.now();
+  if(REDUCED){ finalFrame(); return; }
+  raf=requestAnimationFrame(loop);
+}
+
+addEventListener('resize', ()=>{resize(); if(REDUCED) finalFrame();});
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ paused=true; cancelAnimationFrame(raf); }
+  else if(!REDUCED){
+    // reanudar en ambiente si la intro ya pasó; si no, reiniciar limpio
+    paused=false;
+    const t=(performance.now()-t0)/1000;
+    if(t<T.ambient) t0=performance.now();
+    raf=requestAnimationFrame(loop);
+  }
+});
+replayBtn.addEventListener('click', start);
+addEventListener('keydown', e=>{
+  if((e.key==='r'||e.key==='R') && !e.metaKey && !e.ctrlKey) start();
+});
+
+/* red de seguridad: si algo impide el rAF, mostrar el final */
+setTimeout(()=>{ if(!window.__fx0 && !REDUCED){
+  const t=(performance.now()-t0)/1000;
+  if(t>7){ finalFrame(); }
+}}, 8000);
+
+resize();
+const dbg = location.hash.match(/^#t=([\d.]+)/);
+if(dbg){
+  const tt = parseFloat(dbg[1]);
+  draw(tt); updateBrand(tt);
+}else{
+  start();
+}
+})();
+</script>
+</body>
+</html>
