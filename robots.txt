@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /fuente/
 
 Sitemap: https://abayperformance.com/sitemap.xml
