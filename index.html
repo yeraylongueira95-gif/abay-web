@@ -462,15 +462,18 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 @keyframes pulso{0%,100%{opacity:1}50%{opacity:.25}}
 .prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,26px)}
 .prod{border:1px solid var(--line);background:var(--coal);display:flex;flex-direction:column;overflow:hidden}
-.prod .ph{position:relative;aspect-ratio:3/4;overflow:hidden;background:#0a0c0f}
-.prod .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);will-change:transform}
-#phTote{background:#fff}
-#phTote img{object-fit:contain;padding:6% 8%}
+.prod .ph{position:relative;aspect-ratio:3/4;overflow:hidden;background:#efece6}
+.prod .ph img{width:100%;height:100%;object-fit:contain;transition:transform 1.2s var(--ease),opacity .6s ease;will-change:transform}
+#phTote{background:#efece6}
 
-.prod.neg .ph img{transform:scale(2.5);transform-origin:33% 54%}
-.prod.neg:hover .ph img{transform:scale(2.65)}
-.prod.bla .ph img{transform:scale(2.5);transform-origin:72% 54%}
-.prod.bla:hover .ph img{transform:scale(2.65)}
+@media(hover:hover){.prod:hover .ph img{transform:scale(1.04)}}
+.ph.doble picture{position:absolute;inset:0}
+.ph.doble picture:nth-of-type(2){opacity:0}
+.ph.doble.flip picture:nth-of-type(2){opacity:1}
+.ph.doble.flip picture:nth-of-type(1){opacity:0}
+@media(hover:hover){.prod:hover .ph.doble picture:nth-of-type(2){opacity:1}.prod:hover .ph.doble picture:nth-of-type(1){opacity:0}}
+.ph.doble .cara{position:absolute;left:12px;bottom:12px;z-index:2;font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(5,6,8,.12);padding:6px 11px;border-radius:999px;pointer-events:none;opacity:0;transition:opacity .4s ease}
+@media(hover:none){.ph.doble{cursor:pointer}.ph.doble .cara{opacity:1}}
 .prod .info{padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px;flex:1}
 .prod h3{font-size:clamp(20px,1.7vw,24px);font-weight:500;letter-spacing:-.005em}
 .prod .desc{color:var(--stone);font-size:14px;line-height:1.55}
@@ -488,7 +491,7 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 .ti-nota span{display:flex;align-items:center;gap:9px}
 .ti-nota svg{width:13px;height:9px;fill:var(--amber);flex:none}
 @media(max-width:900px){.ti-head{grid-template-columns:1fr;gap:18px}.prods{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.prods{grid-template-columns:1fr;gap:12px}.prod .ph{aspect-ratio:1/1}.prod.neg .ph img{transform:scale(1.9);transform-origin:34% 50%}.prod.bla .ph img{transform:scale(1.9);transform-origin:71% 50%}}
+@media(max-width:620px){.prods{grid-template-columns:1fr;gap:12px}.prod .ph{aspect-ratio:4/5}}
 
 /* ================= WHATSAPP FIJO ================= */
 #waFab{
@@ -740,7 +743,7 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
 
   <div class="prods">
     <article class="prod neg rv" data-prod="Camiseta negra">
-      <div class="ph"><picture><source type="image/avif" srcset="/assets/img/camisetas-600.avif 600w, /assets/img/camisetas-1100.avif 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw"><img src="/assets/img/camisetas-600.jpg" srcset="/assets/img/camisetas-600.jpg 600w, /assets/img/camisetas-1100.jpg 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw" width="600" height="900" alt="Camiseta ABAY negra con el vector bordado en el pecho" loading="lazy" decoding="async"></picture></div>
+      <div class="ph"><picture><source type="image/avif" srcset="/assets/img/camiseta-negra-600.avif 600w, /assets/img/camiseta-negra-1100.avif 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw"><img src="/assets/img/camiseta-negra-600.jpg" srcset="/assets/img/camiseta-negra-600.jpg 600w, /assets/img/camiseta-negra-1100.jpg 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw" width="600" height="800" alt="Camiseta ABAY negra con el vector y el logotipo en el pecho" loading="lazy" decoding="async"></picture></div>
       <div class="info">
         <h3>Camiseta negra</h3>
         <p class="desc">Corte oversize, algodón grueso. Vector y logotipo en el pecho.</p>
@@ -751,10 +754,10 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
     </article>
 
     <article class="prod bla rv d1" data-prod="Camiseta blanca">
-      <div class="ph"><picture><source type="image/avif" srcset="/assets/img/camisetas-600.avif 600w, /assets/img/camisetas-1100.avif 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw"><img src="/assets/img/camisetas-600.jpg" srcset="/assets/img/camisetas-600.jpg 600w, /assets/img/camisetas-1100.jpg 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw" width="600" height="900" alt="Camiseta ABAY blanca con el logotipo grande a la espalda" loading="lazy" decoding="async"></picture></div>
+      <div class="ph doble"><picture><source type="image/avif" srcset="/assets/img/camiseta-blanca-600.avif 600w, /assets/img/camiseta-blanca-1100.avif 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw"><img src="/assets/img/camiseta-blanca-600.jpg" srcset="/assets/img/camiseta-blanca-600.jpg 600w, /assets/img/camiseta-blanca-1100.jpg 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw" width="600" height="800" alt="Camiseta ABAY blanca, espalda con el logotipo grande" loading="lazy" decoding="async"></picture><picture><source type="image/avif" srcset="/assets/img/camiseta-blanca-frente-600.avif 600w, /assets/img/camiseta-blanca-frente-1100.avif 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw"><img src="/assets/img/camiseta-blanca-frente-600.jpg" srcset="/assets/img/camiseta-blanca-frente-600.jpg 600w, /assets/img/camiseta-blanca-frente-1100.jpg 1100w" sizes="(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw" width="600" height="800" alt="Camiseta ABAY blanca, frente con el vector granate" loading="lazy" decoding="async"></picture><span class="cara">Toca para ver el frente</span></div>
       <div class="info">
         <h3>Camiseta blanca</h3>
-        <p class="desc">Corte oversize, algodón grueso. Logotipo grande «ABAY · A Coruña 2026».</p>
+        <p class="desc">Corte oversize, algodón grueso. Vector granate en el pecho y logotipo grande a la espalda.</p>
         <p class="precio"><b>29,99 €</b></p>
         <div class="tallas" role="group" aria-label="Talla de la camiseta blanca"></div>
         <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
@@ -1645,6 +1648,15 @@ document.querySelectorAll('.prod').forEach(function(card){
         b.setAttribute('aria-pressed','true'); elegida = t; pedir();
       });
       cont.appendChild(b);
+    });
+  }
+  /* sin ratón (móvil) la otra cara se ve tocando la foto */
+  var doble = card.querySelector('.ph.doble');
+  if(doble && matchMedia('(hover:none)').matches){
+    doble.addEventListener('click', function(){
+      var v = doble.classList.toggle('flip');
+      var cara = doble.querySelector('.cara');
+      if(cara) cara.textContent = v ? 'Toca para ver la espalda' : 'Toca para ver el frente';
     });
   }
   var a = card.querySelector('.js-pedir');

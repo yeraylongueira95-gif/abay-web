@@ -6,9 +6,10 @@ import os
 DOMINIO = "https://abayperformance.com"
 EMPRESA = {
     "razon": "ABAY CENTRO DE ENTRENAMIENTO, S.L.",
+    "domicilio": "C/ Cuento, 14, 2.º, 15002 A Coruña",
     "cif": "B26748228",
-    "registro": "[Datos de inscripción en el Registro Mercantil de A Coruña PENDIENTES]",
-    "direccion": "C/ Pedro Galán Calvete, 9, 15002 A Coruña",
+    "registro": "Inscrita en el Registro Mercantil de A Coruña, hoja C-67639, inscripción 1.ª, de 18 de febrero de 2026",
+    "direccion": "C/ Pedro Galán Calvete, 9, 15002 A Coruña",  # el centro
     "email": "info@abay.es",
 }
 
@@ -60,7 +61,7 @@ def pagina(titulo, desc, cuerpo, ruta, indexar=True):
 {cuerpo}
 </main>
 <footer>
-  <span>© 2026 ABAY Performance Center · A Coruña</span>
+  <span>© 2026 ABAY Centro de Entrenamiento, S.L. · A Coruña</span>
   <a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a><a href="/cookies/">Cookies</a>
 </footer>
 </body>
@@ -80,12 +81,25 @@ AVISO = P(f"""<p class="k">Información legal</p>
 <ul>
 <li>Razón social: {E['razon']}</li>
 <li>CIF: {E['cif']}</li>
-<li>Domicilio: {E['direccion']}</li>
+<li>Domicilio social: {E['domicilio']}</li>
+<li>Centro: {E['direccion']}</li>
 <li>Email: {E['email']}</li>
 <li>{E['registro']}</li>
 </ul>
 <h2>Objeto</h2>
-<p>La web abayperformance.com informa sobre los servicios de ABAY Performance Center: entrenamiento personal, funcional y de rendimiento deportivo; fisioterapia, rehabilitación y recuperación; nutrición; y demás actividades relacionadas con la salud, el deporte y el bienestar que constan en el objeto social de la sociedad. A través de la web también pueden ofrecerse y contratarse servicios y productos propios; en ese caso se publicarán sus condiciones de contratación.</p>
+<p>La web abayperformance.com informa sobre los servicios de ABAY Performance Center y permite ponerse en contacto con el centro. A través de la web también pueden ofrecerse y contratarse servicios y productos propios; en ese caso se publicarán sus condiciones de contratación.</p>
+<h2>Objeto social</h2>
+<p>Según sus estatutos, la sociedad tiene por objeto social (CNAE 8551) las actividades de formación, en forma de entrenamientos personales y colectivos, sesiones grupales de entrenamiento de fuerza y acondicionamiento, clases dirigidas, running, entrenamiento funcional, asesoramiento y entrenamiento online, pilates y cualquier actividad relacionada con la salud postural. Asimismo desarrolla, entre otras:</p>
+<ul>
+<li>Desarrollo de centros de entrenamiento, salud, bienestar y actividades deportivas (CNAE 9313).</li>
+<li>Venta y comercialización, al por menor y/o al por mayor, de material y artículos deportivos, ropa y complementos deportivos (CNAE 4764).</li>
+<li>Actividades de recuperación físico-deportiva mediante técnicas no sanitarias deportivas y rehabilitación, mejora del rendimiento deportivo y tecnificación, y asesoramiento nutricional y dietético.</li>
+<li>Asesoramiento afectivo-motivacional y gestión emocional en el ámbito deportivo.</li>
+<li>Asesoramiento sobre cuidado y prevención de lesiones en el complejo pie-tobillo en el ámbito deportivo.</li>
+<li>Asesoramiento técnico en el ámbito deportivo.</li>
+<li>Alquiler de bienes inmobiliarios por cuenta propia (CNAE 6820).</li>
+<li>Desarrollo de actividades y eventos de carácter formativo en el ámbito deportivo, así como colaboraciones con entidades públicas y/o privadas.</li>
+</ul>
 <h2>Propiedad intelectual</h2>
 <p>Los textos, fotografías, logotipos y el diseño de esta web pertenecen a {E['razon']} o a sus autores, y no pueden reproducirse sin autorización.</p>
 <h2>Responsabilidad</h2>
@@ -96,7 +110,7 @@ AVISO = P(f"""<p class="k">Información legal</p>
 PRIV = P(f"""<p class="k">Información legal</p>
 <h1>Política de privacidad</h1>
 <h2>Responsable</h2>
-<p>{E['razon']} (CIF {E['cif']}), {E['direccion']}. Contacto: {E['email']}.</p>
+<p>{E['razon']} (CIF {E['cif']}), con domicilio social en {E['domicilio']} y centro en {E['direccion']}. Contacto: {E['email']}.</p>
 <h2>Qué datos tratamos</h2>
 <p>Tratamos los datos que nos facilitas cuando nos escribes por WhatsApp, email o Instagram: tu nombre, tu forma de contacto y lo que nos cuentes en el mensaje. Si rellenas un formulario de contacto o de reserva en esta web, tratamos además los datos que indiques en él. Solo pedimos lo necesario para atenderte.</p>
 <h2>Para qué</h2>

@@ -113,18 +113,21 @@ def dims(path):
 
 def pic(m):
     name, alt, sizes = m.group(1), m.group(2), m.group(3)
+    ext = "png" if any(f.startswith(name + "-") and f.endswith(".png") for f in os.listdir(IMG)) else "jpg"
     widths = sorted(int(f.split("-")[-1].split(".")[0]) for f in os.listdir(IMG)
-                    if f.startswith(name + "-") and f.endswith(".jpg"))
+                    if f.startswith(name + "-") and f.endswith("." + ext)
+                    and f.split("-")[-1].split(".")[0].isdigit()
+                    and f[:-(len(ext) + 1)].rsplit("-", 1)[0] == name)
     assert widths, "faltan imágenes de " + name
     small = widths[0]
-    w, h = dims(os.path.join(IMG, f"{name}-{small}.jpg"))
+    w, h = dims(os.path.join(IMG, f"{name}-{small}.{ext}"))
     avif = ", ".join(f"/assets/img/{name}-{x}.avif {x}w" for x in widths)
-    jpg = ", ".join(f"/assets/img/{name}-{x}.jpg {x}w" for x in widths)
+    resp = ", ".join(f"/assets/img/{name}-{x}.{ext} {x}w" for x in widths)
     return (f'<picture><source type="image/avif" srcset="{avif}" sizes="{sizes}">'
-            f'<img src="/assets/img/{name}-{small}.jpg" srcset="{jpg}" sizes="{sizes}" '
+            f'<img src="/assets/img/{name}-{small}.{ext}" srcset="{resp}" sizes="{sizes}" '
             f'width="{w}" height="{h}" alt="{alt}" loading="lazy" decoding="async"></picture>')
 
-html = re.sub(r"\{\{pic:([a-z0-9]+)\|([^|}]+)\|([^}]+)\}\}", pic, tpl)
+html = re.sub(r"\{\{pic:([a-z0-9-]+)\|([^|}]+)\|([^}]+)\}\}", pic, tpl)
 html = (html.replace("__HEROCSS__", hero_css)
             .replace("__HEROHTML__", hero_html)
             .replace("__HEROJS__", js)
