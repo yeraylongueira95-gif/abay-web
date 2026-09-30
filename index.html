@@ -481,11 +481,12 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 .prod .precio b{font-weight:300;font-size:clamp(26px,2.2vw,32px);letter-spacing:-.01em}
 .prod .precio s{color:var(--stone-dim);font-size:15px}
 .prod .precio em{font-style:normal;font-family:var(--fm);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
-.tallas{display:flex;gap:6px;flex-wrap:wrap}
-.tallas button{background:none;border:1px solid rgba(243,239,231,.22);color:var(--stone);font-family:var(--fm);font-size:11px;letter-spacing:.1em;padding:9px 12px;transition:.25s}
+.tallas{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+.tallas button{background:none;border:1px solid rgba(243,239,231,.22);color:var(--stone);font-family:var(--fm);font-size:10.5px;letter-spacing:.04em;padding:9px 2px;transition:.25s}
 .tallas button:hover{border-color:var(--bone);color:var(--bone)}
 .tallas button[aria-pressed="true"]{background:var(--bone);border-color:var(--bone);color:var(--ink)}
-.prod .cta{margin-top:auto;justify-content:center;background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.prod .cta{margin-top:auto;justify-content:center;background:var(--bone);color:var(--ink);border-color:var(--bone);font-size:10.5px;letter-spacing:.11em;gap:9px;padding:14px 12px;white-space:nowrap}
+.prod .cta svg{width:13px;height:13px}
 .prod .cta:hover{background:transparent;color:var(--bone)}
 .ti-nota{margin-top:clamp(26px,4vh,40px);display:flex;gap:10px 28px;flex-wrap:wrap;color:var(--stone);font-size:14px;line-height:1.6}
 .ti-nota span{display:flex;align-items:center;gap:9px}
@@ -777,7 +778,7 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
 
   <p class="ti-nota rv">
     <span><svg aria-hidden="true"><use href="#spk"/></svg>Recogida en el centro, en Monte Alto.</span>
-    <span><svg aria-hidden="true"><use href="#spk"/></svg>¿Necesitas envío? Dínoslo por WhatsApp.</span>
+    <span><svg aria-hidden="true"><use href="#spk"/></svg>Envío a domicilio: lo concretamos por WhatsApp.</span>
     <span><svg aria-hidden="true"><use href="#spk"/></svg>Pago al recoger o por Bizum.</span>
   </p>
 </section>
@@ -1635,7 +1636,7 @@ cards.forEach(function(c){
 });
 
 /* ---------- tienda: talla + pedido por WhatsApp ---------- */
-var TALLAS = ["S","M","L","XL","XXL"];
+var TALLAS = ["XS","S","M","L","XL","XXL"];
 document.querySelectorAll('.prod').forEach(function(card){
   var cont = card.querySelector('.tallas');
   var elegida = null;
