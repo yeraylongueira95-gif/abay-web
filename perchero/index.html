@@ -16,7 +16,7 @@
   --fs:'Space Grotesk',system-ui,sans-serif; --fm:'Space Mono',ui-monospace,monospace;
   --ease:cubic-bezier(.62,.02,.2,1);
   --alto:clamp(230px,38vh,400px);     /* alto de la prenda colgada */
-  --giro:46deg;                        /* cuanto se ve de canto en reposo */
+  --giro:58deg;                        /* cuanto se ve de canto en reposo */
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -68,23 +68,23 @@ main{flex:1; display:flex; flex-direction:column; justify-content:center; paddin
   position:relative; flex:0 0 auto; background:none; border:0; padding:0; margin:0;
   cursor:pointer; color:inherit; font:inherit; -webkit-tap-highlight-color:transparent;
   /* el hueco que ocupa en la barra: en reposo, lo que mide girada */
-  width:calc(var(--alto) * var(--w) * 0.70);
-  height:calc(var(--alto) + 74px);
+  width:calc(var(--alto) * var(--w) * 0.56);
+  height:calc(var(--alto) + 96px);
   transition:width 1s var(--ease);
 }
 .pieza + .pieza{margin-left:clamp(-26px,-2vw,-8px)}
 
 /* la prenda mantiene siempre su tamano real; solo cambia el hueco */
 .gancho{
-  position:absolute; top:46px; left:50%; margin-left:calc(var(--alto) * var(--w) / -2);
+  position:absolute; top:64px; left:50%; margin-left:calc(var(--alto) * var(--w) / -2);
   width:calc(var(--alto) * var(--w));
-  transform-origin:50% -46px; will-change:transform;
+  transform-origin:50% -64px; will-change:transform;
 }
 /* la percha va DENTRO de lo que gira, para que acompane a la prenda */
-.percha{position:absolute; left:50%; top:-44px; width:36%; max-width:124px;
+.percha{position:absolute; left:50%; top:-62px; width:34%; max-width:118px;
   transform:translateX(-50%); overflow:visible; display:block}
-.percha path{stroke:#9b7a4e; stroke-width:7; fill:none; stroke-linecap:round; stroke-linejoin:round}
-.percha .alambre{stroke:#b9bcc0; stroke-width:5}
+.percha .alambre{stroke:#a9adb2; stroke-width:4.5; fill:none; stroke-linecap:round}
+.percha .madera{fill:#8d6b43; stroke:#8d6b43; stroke-width:3; stroke-linejoin:round}
 .pieza.bolso .gancho{top:6px; transform-origin:50% -6px}
 .pieza.bolso .percha{display:none}
 
@@ -226,10 +226,10 @@ var PRENDAS = [
     caras:[{n:"Con logotipo", img:"rack-tote-logo"},{n:"Lisa", img:"rack-tote-liso"}] }
 ];
 
-var HANGER = '<svg class="percha" viewBox="0 0 120 54" aria-hidden="true">' +
-  '<path class="alambre" d="M60 16 C60 8 55 4 50 6"/>' +
-  '<path class="alambre" d="M60 16 v5"/>' +
-  '<path d="M60 21 L10 46 H110 Z"/></svg>';
+var HANGER = '<svg class="percha" viewBox="0 0 120 86" aria-hidden="true">' +
+  '<path class="alambre" d="M60 54 V18 C60 9 54 4 48.5 6.5 C45 8 43.5 11 44 14"/>' +
+  '<path class="madera" d="M60 54 L14 76 C10 78 11.5 82 16 82 H104 C108.5 82 110 78 106 76 Z"/>' +
+  '</svg>';
 
 function foto(base, alt, clase){
   return '<picture>' +
