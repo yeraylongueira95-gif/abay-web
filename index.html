@@ -704,7 +704,7 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
       <span class="k"><svg class="sp" aria-hidden="true"><use href="#spk"/></svg>Dónde estamos</span>
       <p>C/ Pedro Galán Calvete, 9<br>15002 A Coruña</p>
       <small>Monte Alto, junto a la Torre de Hércules.</small>
-      <a class="cta" id="maps" href="https://www.google.com/maps/search/?api=1&amp;query=ABAY+Performance+Center%2C+Pedro+Gal%C3%A1n+Calvete+9%2C+15002+A+Coru%C3%B1a" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#pin"/></svg>Cómo llegar</a>
+      <a class="cta" id="maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=ABAY+Performance+Center&amp;destination_place_id=ChIJXxoDO799Lg0R23QLe08RAXY" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#pin"/></svg>Cómo llegar</a>
     </address>
     <div class="map" id="map">
       <button type="button" class="load" id="mapLoad">
@@ -1447,7 +1447,7 @@ document.querySelectorAll('.js-wa').forEach(function(a){
   if(wa){ a.href = wa; a.target = "_blank"; a.rel = "noopener"; }
   else if(DATOS.email){ a.href = "mailto:" + DATOS.email + "?subject=" + encodeURIComponent("Primera sesión en ABAY"); }
 });
-var maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("ABAY Performance Center, R. Pedro Galán Calvete 9, A Coruña");
+var maps = "https://maps.google.com/?cid=8503096604516644059";
 $('#verRes').href = DATOS.googleResenas || maps;
 $('#escRes').href = DATOS.googleEscribir || DATOS.googleResenas || maps;
 
@@ -1688,7 +1688,7 @@ addEventListener('error', function(e){
 $('#mapLoad').addEventListener('click', function(){
   var f = document.createElement('iframe');
   f.title = "Mapa: ABAY Performance Center"; f.loading = "lazy"; f.referrerPolicy = "no-referrer-when-downgrade";
-  f.src = "https://maps.google.com/maps?q=" + encodeURIComponent("Pedro Galán Calvete, 9, 15002 A Coruña") + "&z=16&output=embed";
+  f.src = "https://maps.google.com/maps?cid=8503096604516644059&z=17&output=embed";
   var m = $('#map'); m.innerHTML = ''; m.appendChild(f);
 });
 })();
