@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Perchero ABAY · prueba</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('/assets/fonts/SpaceGrotesk-latin.woff2') format('woff2');font-weight:300 700;font-display:swap}
+@font-face{font-family:'Space Mono';src:url('/assets/fonts/SpaceMono-latin.woff2') format('woff2');font-weight:400;font-display:swap}
+
+:root{
+  --bone:#f3efe7; --ink:#050608; --stone:#6f7276; --amber:#d9bd92;
+  --papel:#efece6; --linea:rgba(5,6,8,.14);
+  --fs:'Space Grotesk',system-ui,sans-serif; --fm:'Space Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.62,.02,.2,1);
+  --alto:clamp(230px,38vh,400px);     /* alto de la prenda colgada */
+  --giro:46deg;                        /* cuanto se ve de canto en reposo */
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--papel); color:var(--ink); font-family:var(--fs);
+  min-height:100svh; display:flex; flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+/* lunares del fondo, como el tablero de una tienda */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(circle, rgba(5,6,8,.055) 1.4px, transparent 1.5px);
+  background-size:46px 46px;
+}
+.capa{position:relative; z-index:1}
+
+header{display:flex; align-items:center; justify-content:space-between; padding:22px clamp(18px,4vw,46px)}
+.marca{display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit}
+.marca svg{width:26px; height:19px; fill:var(--ink)}
+.marca b{font-weight:500; letter-spacing:.3em; font-size:12px; text-transform:uppercase}
+.aviso{font-family:var(--fm); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--stone)}
+
+main{flex:1; display:flex; flex-direction:column; justify-content:center; padding-bottom:clamp(14px,3vh,34px)}
+.intro{text-align:center; padding:0 20px clamp(18px,4vh,40px)}
+.intro h1{font-size:clamp(26px,4.2vw,46px); font-weight:400; letter-spacing:-.02em; margin:0 0 10px}
+.intro p{margin:0; color:var(--stone); font-size:15px; line-height:1.6}
+.sin-raton{display:none}
+@media(hover:none){.con-raton{display:none}.sin-raton{display:inline}}
+
+/* ---------- la barra ---------- */
+.barra{position:relative; margin:0 auto; width:min(1180px,92vw)}
+.tubo{
+  position:relative; z-index:3; height:13px; border-radius:7px;
+  background:linear-gradient(180deg,#f7f7f8 0%,#cfd2d6 18%,#8e9499 48%,#c9ccd0 72%,#6f757a 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 7px 16px rgba(5,6,8,.14);
+}
+.sop{position:absolute; z-index:3; top:-9px; width:20px; height:31px; border-radius:4px;
+  background:linear-gradient(180deg,#dfe2e5,#9aa0a5 55%,#75797e);
+  box-shadow:0 3px 8px rgba(5,6,8,.18)}
+.sop.izq{left:-10px} .sop.der{right:-10px}
+
+/* ---------- las prendas ---------- */
+.ropa{
+  display:flex; align-items:flex-start; justify-content:center;
+  position:relative; z-index:1; margin-top:-26px; perspective:1700px; perspective-origin:50% 22%;
+  padding:0 clamp(10px,3vw,40px) 0;
+}
+.pieza{
+  position:relative; flex:0 0 auto; background:none; border:0; padding:0; margin:0;
+  cursor:pointer; color:inherit; font:inherit; -webkit-tap-highlight-color:transparent;
+  /* el hueco que ocupa en la barra: en reposo, lo que mide girada */
+  width:calc(var(--alto) * var(--w) * 0.70);
+  height:calc(var(--alto) + 74px);
+  transition:width 1s var(--ease);
+}
+.pieza + .pieza{margin-left:clamp(-26px,-2vw,-8px)}
+
+/* la prenda mantiene siempre su tamano real; solo cambia el hueco */
+.gancho{
+  position:absolute; top:46px; left:50%; margin-left:calc(var(--alto) * var(--w) / -2);
+  width:calc(var(--alto) * var(--w));
+  transform-origin:50% -46px; will-change:transform;
+}
+/* la percha va DENTRO de lo que gira, para que acompane a la prenda */
+.percha{position:absolute; left:50%; top:-44px; width:36%; max-width:124px;
+  transform:translateX(-50%); overflow:visible; display:block}
+.percha path{stroke:#9b7a4e; stroke-width:7; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.percha .alambre{stroke:#b9bcc0; stroke-width:5}
+.pieza.bolso .gancho{top:6px; transform-origin:50% -6px}
+.pieza.bolso .percha{display:none}
+
+.gira{
+  display:block; position:relative; width:100%; aspect-ratio:var(--w);
+  transform-style:preserve-3d; transform-origin:50% 0;
+  transform:rotateY(calc(var(--giro) * var(--dir)));
+  transition:transform 1.05s var(--ease);
+  will-change:transform;
+}
+.gira picture{position:absolute; inset:0; display:block; backface-visibility:hidden; -webkit-backface-visibility:hidden}
+.gira picture:nth-of-type(2){transform:rotateY(180deg)}
+.gira img{width:100%; height:100%; object-fit:contain; display:block;
+  filter:drop-shadow(0 18px 22px rgba(5,6,8,.17))}
+
+/* la prenda abierta: de frente y a su ancho real */
+.pieza.abierta{width:calc(var(--alto) * var(--w))}
+.pieza.abierta .gira{transform:rotateY(var(--cara))}
+.pieza.abierta{z-index:3}
+
+.nombre{
+  position:absolute; left:50%; bottom:6px; transform:translateX(-50%) translateY(6px);
+  white-space:nowrap; text-align:center;
+  font-family:var(--fm); font-size:11px; letter-spacing:.12em; color:var(--stone);
+  opacity:0; transition:opacity .5s ease, transform .5s ease;
+}
+.pieza.abierta .nombre{opacity:1; transform:translateX(-50%)}
+
+/* vaiven suave al abrirse */
+@keyframes vaiven{
+  0%{transform:rotate(0deg)} 22%{transform:rotate(1.5deg)} 48%{transform:rotate(-1deg)}
+  74%{transform:rotate(.45deg)} 100%{transform:rotate(0deg)}
+}
+.pieza.abierta .gancho{animation:vaiven 1.5s var(--ease)}
+
+.pie{text-align:center; margin-top:clamp(20px,4vh,40px)}
+.btn{
+  display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+  font-family:var(--fm); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  background:none; color:var(--ink); border:1px solid var(--linea); border-radius:999px;
+  padding:13px 26px; text-decoration:none; transition:.3s;
+}
+.btn:hover{border-color:var(--ink)}
+
+/* ---------- ficha a pantalla completa ---------- */
+.ficha{
+  position:fixed; inset:0; z-index:40; display:none; border:0;
+  width:100%; height:100%; max-width:none; max-height:none;
+  background:var(--papel); padding:clamp(14px,3vw,34px);
+  grid-template-rows:auto 1fr auto; gap:10px;
+}
+.ficha[open]{display:grid}
+.ficha::backdrop{background:var(--papel)}
+.f-top{display:flex; justify-content:flex-end}
+.cerrar{background:none; border:1px solid var(--linea); border-radius:999px; width:40px; height:40px;
+  cursor:pointer; font-size:17px; line-height:1; color:var(--ink)}
+.f-cuerpo{position:relative; display:flex; align-items:center; justify-content:center; min-height:0}
+.f-foto{height:100%; max-height:62vh; display:flex; align-items:center; justify-content:center}
+.f-foto img{max-height:62vh; max-width:min(78vw,620px); object-fit:contain;
+  filter:drop-shadow(0 22px 30px rgba(5,6,8,.16))}
+.flecha{position:absolute; z-index:2; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:999px;
+  background:rgba(255,255,255,.7); border:1px solid var(--linea); cursor:pointer; color:var(--ink); font-size:16px}
+.flecha.ant{left:clamp(4px,2vw,30px)} .flecha.sig{right:clamp(4px,2vw,30px)}
+.f-pie{text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; padding-bottom:6px}
+.f-pie h2{margin:0; font-size:clamp(20px,2.6vw,27px); font-weight:400}
+.f-pie .precio{font-size:clamp(20px,2.4vw,26px); font-weight:300}
+.caras{display:flex; gap:8px}
+.caras button{font-family:var(--fm); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+  background:none; border:1px solid var(--linea); border-radius:999px; padding:8px 15px; cursor:pointer; color:var(--stone)}
+.caras button[aria-pressed="true"]{border-color:var(--ink); color:var(--ink)}
+.f-pie .btn{background:var(--ink); color:var(--bone); border-color:var(--ink)}
+
+@media(max-width:700px), (hover:none){
+  :root{--alto:clamp(190px,30vh,280px)}
+  .ropa{justify-content:flex-start; overflow-x:auto; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-left:50vw; padding-right:50vw}
+  .ropa::-webkit-scrollbar{display:none}
+  .pieza{scroll-snap-align:center}
+  .pieza + .pieza{margin-left:clamp(-18px,-3vw,-6px)}
+  .barra{width:100vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .gira,.pieza,.nombre{transition:none}
+  .pieza.abierta .gancho{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="capa">
+<header>
+  <a class="marca" href="/">
+    <svg viewBox="0 0 64 46" aria-hidden="true"><path d="M2 30 C18 26 26 18 40 2 C34 18 36 26 62 16 C46 22 38 28 24 44 C30 30 28 24 2 30 Z"/></svg>
+    <b>ABAY</b>
+  </a>
+  <span class="aviso">Prueba · perchero</span>
+</header>
+
+<main>
+  <div class="intro">
+    <h1>La percha</h1>
+    <p><span class="con-raton">Pasa el ratón por encima para girar la prenda; haz clic para verla entera.</span><span class="sin-raton">Desliza para girar la prenda y tócala para verla entera.</span></p>
+  </div>
+
+  <div class="barra">
+    <div class="tubo"><span class="sop izq"></span><span class="sop der"></span></div>
+    <div class="ropa" id="ropa"></div>
+  </div>
+
+  <div class="pie"><a class="btn" href="/#tienda">Ver la tienda actual</a></div>
+</main>
+</div>
+
+<dialog class="ficha" id="ficha">
+  <div class="f-top"><button class="cerrar" id="cerrar" aria-label="Cerrar">✕</button></div>
+  <div class="f-cuerpo">
+    <button class="flecha ant" id="ant" aria-label="Anterior">←</button>
+    <div class="f-foto"><img id="fImg" alt=""></div>
+    <button class="flecha sig" id="sig" aria-label="Siguiente">→</button>
+  </div>
+  <div class="f-pie">
+    <h2 id="fNom"></h2>
+    <div class="precio" id="fPre"></div>
+    <div class="caras" id="fCaras"></div>
+    <a class="btn" id="fWa" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+  </div>
+</dialog>
+
+<script>
+var WA = "34624852324";
+
+/* cara: grados a los que gira al abrirse. 0 = la primera foto, 180 = la segunda */
+var PRENDAS = [
+  { id:"negra",  nom:"Camiseta negra",  precio:"29,99 €", w:0.946, dir:-1, cara:0,
+    caras:[{n:"Frente", img:"rack-negra-frente"},{n:"Espalda", img:"rack-negra-espalda"}] },
+  { id:"blanca", nom:"Camiseta blanca", precio:"29,99 €", w:0.973, dir:-1, cara:180,
+    caras:[{n:"Frente", img:"rack-blanca-frente"},{n:"Espalda", img:"rack-blanca-espalda"}] },
+  { id:"tote",   nom:"Tote bag",        precio:"12,99 €", w:0.518, dir:1,  cara:0,
+    caras:[{n:"Con logotipo", img:"rack-tote-logo"},{n:"Lisa", img:"rack-tote-liso"}] }
+];
+
+var HANGER = '<svg class="percha" viewBox="0 0 120 54" aria-hidden="true">' +
+  '<path class="alambre" d="M60 16 C60 8 55 4 50 6"/>' +
+  '<path class="alambre" d="M60 16 v5"/>' +
+  '<path d="M60 21 L10 46 H110 Z"/></svg>';
+
+function foto(base, alt, clase){
+  return '<picture>' +
+    '<source type="image/webp" srcset="/assets/img/'+base+'-480.webp 480w, /assets/img/'+base+'-900.webp 900w" sizes="(max-width:860px) 60vw, 34vw">' +
+    '<img src="/assets/img/'+base+'-480.png" alt="'+alt+'" loading="lazy" decoding="async">' +
+    '</picture>';
+}
+
+var ropa = document.getElementById('ropa');
+PRENDAS.forEach(function(p, i){
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'pieza';
+  b.style.setProperty('--w', p.w);
+  b.style.setProperty('--dir', p.dir);
+  b.style.setProperty('--cara', p.cara + 'deg');
+  b.setAttribute('aria-label', p.nom + ', ' + p.precio);
+  b.dataset.i = i;
+  if(p.id === 'tote') b.classList.add('bolso');
+  b.innerHTML = '<span class="gancho">' +
+      '<span class="gira">' + HANGER +
+                              foto(p.caras[0].img, p.nom + ', ' + p.caras[0].n) +
+                              foto(p.caras[1].img, p.nom + ', ' + p.caras[1].n) + '</span>' +
+    '</span>' +
+    '<span class="nombre">' + p.nom + ' · ' + p.precio + '</span>';
+  ropa.appendChild(b);
+});
+
+var piezas = [].slice.call(document.querySelectorAll('.pieza'));
+var hayRaton = matchMedia('(hover:hover)').matches;
+
+function abrir(el){ piezas.forEach(function(p){ p.classList.toggle('abierta', p === el); }); }
+
+if(hayRaton){
+  piezas.forEach(function(p){
+    p.addEventListener('mouseenter', function(){ abrir(p); });
+    p.addEventListener('focus', function(){ abrir(p); });
+  });
+  ropa.addEventListener('mouseleave', function(){ abrir(null); });
+} else {
+  /* sin ratón: se abre la prenda que queda en el centro al deslizar */
+  var centrar = function(){
+    var mid = window.innerWidth / 2, mejor = null, dist = 1e9;
+    piezas.forEach(function(p){
+      var r = p.getBoundingClientRect(), d = Math.abs(r.left + r.width/2 - mid);
+      if(d < dist){ dist = d; mejor = p; }
+    });
+    abrir(mejor);
+  };
+  ropa.addEventListener('scroll', function(){ clearTimeout(ropa._t); ropa._t = setTimeout(centrar, 70); }, {passive:true});
+  addEventListener('resize', centrar);
+  setTimeout(centrar, 60);
+}
+
+/* ---------- ficha ---------- */
+var ficha = document.getElementById('ficha'), fImg = document.getElementById('fImg'),
+    fNom = document.getElementById('fNom'), fPre = document.getElementById('fPre'),
+    fCaras = document.getElementById('fCaras'), fWa = document.getElementById('fWa');
+var actual = 0, cara = 0;
+
+function pinta(){
+  var p = PRENDAS[actual];
+  fImg.src = '/assets/img/' + p.caras[cara].img + '-900.webp';
+  fImg.alt = p.nom + ', ' + p.caras[cara].n;
+  fNom.textContent = p.nom;
+  fPre.textContent = p.precio;
+  fCaras.innerHTML = '';
+  p.caras.forEach(function(c, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = c.n;
+    b.setAttribute('aria-pressed', i === cara ? 'true' : 'false');
+    b.addEventListener('click', function(){ cara = i; pinta(); });
+    fCaras.appendChild(b);
+  });
+  var txt = "Hola ABAY, quiero " + (p.id === 'tote' ? "el " : "la ") + p.nom.toLowerCase() +
+            ". ¿Me confirmáis disponibilidad?";
+  fWa.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(txt);
+}
+function mueve(d){ actual = (actual + d + PRENDAS.length) % PRENDAS.length; cara = 0; pinta(); }
+
+piezas.forEach(function(p){
+  p.addEventListener('click', function(){
+    actual = +p.dataset.i; cara = PRENDAS[actual].cara === 180 ? 1 : 0;
+    pinta(); ficha.showModal();
+  });
+});
+document.getElementById('ant').addEventListener('click', function(){ mueve(-1); });
+document.getElementById('sig').addEventListener('click', function(){ mueve(1); });
+document.getElementById('cerrar').addEventListener('click', function(){ ficha.close(); });
+ficha.addEventListener('keydown', function(e){
+  if(e.key === 'ArrowLeft') mueve(-1);
+  if(e.key === 'ArrowRight') mueve(1);
+});
+</script>
+</body>
+</html>
