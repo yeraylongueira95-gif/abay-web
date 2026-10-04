@@ -130,8 +130,8 @@ COOK = P("""<p class="k">Información legal</p>
 <h1>Política de cookies</h1>
 <h2>Esta web no usa cookies</h2>
 <p>abayperformance.com no instala cookies propias ni de terceros, ni usa herramientas de analítica o publicidad. Las fuentes y las imágenes se sirven desde nuestro propio dominio. Por eso no verás ningún aviso de cookies.</p>
-<h2>El mapa de Google</h2>
-<p>En la sección «El espacio» hay un mapa que solo se carga si pulsas «Ver mapa». En ese momento Google Maps puede instalar sus propias cookies, según la <a href="https://policies.google.com/technologies/cookies?hl=es" rel="noopener">política de cookies de Google</a>.</p>
+<h2>El mapa</h2>
+<p>El plano de la sección «El espacio» es una imagen alojada en nuestro propio servidor, hecha con datos de <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a> (© colaboradores de OpenStreetMap). No se carga nada desde Google ni desde ningún otro servidor: al verlo no se envía tu dirección IP a terceros ni se instala ninguna cookie. Solo si pulsas el plano se abre Google Maps, ya fuera de esta web.</p>
 <h2>Enlaces externos</h2>
 <p>Los botones de WhatsApp, Instagram y Google te llevan a esas plataformas, que tienen sus propias políticas de cookies.</p>""")
 
@@ -161,7 +161,7 @@ def generar(out):
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   X-Frame-Options: SAMEORIGIN
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src 'none'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable

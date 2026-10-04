@@ -307,18 +307,18 @@ body.scrolled #scrollCue{opacity:0;pointer-events:none}
 .addr p{font-weight:300;font-size:clamp(22px,2.2vw,30px);line-height:1.3}
 .addr small{display:block;color:var(--stone);font-size:14px;line-height:1.6}
 .addr .cta{align-self:flex-start}
-.map{position:relative;min-height:300px;background:#0a0c0f;overflow:hidden;display:grid;place-items:center}
-.map::before{content:"";position:absolute;inset:0;opacity:.5;background:
-  repeating-linear-gradient(0deg,transparent 0 38px,rgba(243,239,231,.05) 38px 39px),
-  repeating-linear-gradient(90deg,transparent 0 38px,rgba(243,239,231,.05) 38px 39px)}
-.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.92) contrast(.88) brightness(.95)}
+/* el plano es una imagen nuestra: ni Google ni cookies de nadie */
+.map{position:relative;display:block;min-height:300px;background:#0a0c0f;overflow:hidden;text-decoration:none;color:var(--bone)}
+.map picture,.map img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.map img{transition:transform 1.4s var(--ease)}
+@media(hover:hover){.map:hover img{transform:scale(1.045)}}
 .map::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--line);pointer-events:none}
-.map .load{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;background:none;border:0;color:var(--bone)}
-.map .load .pin{width:46px;height:46px;border:1px solid rgba(243,239,231,.3);border-radius:50%;display:grid;place-items:center;transition:.3s}
-.map .load:hover .pin{background:var(--bone);color:var(--ink)}
-.map .load .pin svg{width:18px;height:18px}
-.map .load span{font-family:var(--fm);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase}
-.map .load small{font-size:12px;color:var(--stone);max-width:30ch;text-align:center;line-height:1.5}
+.map .abrir{position:absolute;z-index:1;left:16px;bottom:14px;display:inline-flex;align-items:center;gap:9px;
+  background:rgba(5,6,8,.62);border:1px solid rgba(243,239,231,.22);border-radius:999px;padding:9px 15px;
+  font-family:var(--fm);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;transition:.3s}
+.map:hover .abrir{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.map .abrir svg{width:12px;height:12px}
+.map .credito{position:absolute;z-index:1;right:10px;bottom:9px;font-size:10px;color:rgba(243,239,231,.45)}
 #lb{position:fixed;inset:0;z-index:80;background:rgba(5,6,8,.95);display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px)}
 #lb.on{display:flex}
 #lb img{max-width:100%;max-height:100%;object-fit:contain}
@@ -706,13 +706,11 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
       <small>Monte Alto, junto a la Torre de Hércules.</small>
       <a class="cta" id="maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=ABAY+Performance+Center&amp;destination_place_id=ChIJXxoDO799Lg0R23QLe08RAXY" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#pin"/></svg>Cómo llegar</a>
     </address>
-    <div class="map" id="map">
-      <button type="button" class="load" id="mapLoad">
-        <span class="pin"><svg aria-hidden="true"><use href="#pin"/></svg></span>
-        <span>Ver mapa</span>
-        <small>Se cargará Google Maps, que puede usar sus propias cookies.</small>
-      </button>
-    </div>
+    <a class="map" id="map" href="https://maps.google.com/?cid=8503096604516644059" target="_blank" rel="noopener">
+      <picture><source type="image/avif" srcset="/assets/img/mapa-600.avif 600w, /assets/img/mapa-1100.avif 1100w" sizes="(max-width:980px) 92vw, 46vw"><img src="/assets/img/mapa-600.jpg" srcset="/assets/img/mapa-600.jpg 600w, /assets/img/mapa-1100.jpg 1100w" sizes="(max-width:980px) 92vw, 46vw" width="600" height="447" alt="Plano de Monte Alto con la situación de ABAY, junto a la Torre de Hércules" loading="lazy" decoding="async"></picture>
+      <span class="abrir"><svg aria-hidden="true"><use href="#pin"/></svg>Abrir en Maps</span>
+      <small class="credito">© OpenStreetMap</small>
+    </a>
   </div>
 </section>
 
@@ -1684,13 +1682,6 @@ addEventListener('error', function(e){
   }
 }, true);
 
-/* ---------- mapa: solo se carga si el usuario lo pide ---------- */
-$('#mapLoad').addEventListener('click', function(){
-  var f = document.createElement('iframe');
-  f.title = "Mapa: ABAY Performance Center"; f.loading = "lazy"; f.referrerPolicy = "no-referrer-when-downgrade";
-  f.src = "https://maps.google.com/maps?cid=8503096604516644059&z=17&output=embed";
-  var m = $('#map'); m.innerHTML = ''; m.appendChild(f);
-});
 })();
 </script>
 </body>
