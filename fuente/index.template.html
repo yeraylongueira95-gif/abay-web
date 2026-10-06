@@ -443,13 +443,17 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 .prod .cta{margin-top:auto;justify-content:center;background:var(--bone);color:var(--ink);border-color:var(--bone);font-size:10.5px;letter-spacing:.11em;gap:9px;padding:14px 12px;white-space:nowrap}
 .prod .cta svg{width:13px;height:13px}
 .prod .cta:hover{background:transparent;color:var(--bone)}
-.regalo{margin-top:clamp(26px,4vh,40px);border:1px solid rgba(12,15,18,.12);padding:clamp(26px,4vw,44px);
-  display:grid;grid-template-columns:1fr auto;align-items:center;gap:clamp(20px,3vw,48px)}
+.regalo{margin-top:clamp(26px,4vh,40px);border:1px solid rgba(12,15,18,.12);padding:clamp(22px,3vw,38px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(22px,3.5vw,54px)}
+.regalo .rg-foto{position:relative;aspect-ratio:7/6;overflow:hidden;background:#dcd8d0}
+.regalo .rg-foto img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s var(--ease)}
+@media(hover:hover){.regalo:hover .rg-foto img{transform:scale(1.035)}}
 .regalo h3{margin:10px 0 12px;font-size:clamp(24px,2.6vw,34px);font-weight:400;letter-spacing:-.015em;line-height:1.1}
-.regalo .txt{margin:0;max-width:46ch;font-size:15px;line-height:1.6;color:var(--muted)}
-.regalo .cta{flex:none;background:var(--fg);color:var(--paper);border-color:var(--fg);white-space:nowrap;font-size:11px;letter-spacing:.13em}
+.regalo .txt{margin:0;max-width:44ch;font-size:15px;line-height:1.6;color:var(--muted)}
+.regalo .cta{margin-top:22px;align-self:flex-start;background:var(--fg);color:var(--paper);border-color:var(--fg);white-space:nowrap;font-size:11px;letter-spacing:.13em}
 .regalo .cta:hover{background:transparent;color:var(--fg)}
-@media(max-width:760px){.regalo{grid-template-columns:1fr;gap:22px}.regalo .cta{justify-content:center}}
+.rg-txt{display:flex;flex-direction:column;align-items:flex-start}
+@media(max-width:760px){.regalo{grid-template-columns:1fr;gap:24px}.regalo .cta{align-self:stretch;justify-content:center}}
 .ti-nota{margin-top:clamp(26px,4vh,40px);display:flex;gap:10px 28px;flex-wrap:wrap;color:var(--stone);font-size:14px;line-height:1.6}
 .ti-nota span{display:flex;align-items:center;gap:9px}
 .ti-nota svg{width:13px;height:9px;fill:var(--amber);flex:none}
@@ -705,12 +709,13 @@ __HEROHTML__
   </div>
 
   <aside class="regalo light rv" aria-labelledby="t-regalo">
-    <div>
+    <div class="rg-foto">{{pic:regalo|Tarjeta regalo de ABAY dentro de su estuche negro|(max-width:760px) 92vw, 42vw}}</div>
+    <div class="rg-txt">
       <p class="eyebrow"><svg class="sp" aria-hidden="true"><use href="#spk"/></svg>Regala ABAY</p>
       <h3 id="t-regalo">Un regalo<br>que se usa.</h3>
-      <p class="txt">Bonos de sesiones para regalar, de entrenamiento o de fisioterapia. Cuéntanos para quién es y te decimos qué opciones hay y qué encaja mejor.</p>
+      <p class="txt">Tarjeta regalo en su estuche, con un espacio para poner a quién va dirigida. Bonos de sesiones de entrenamiento o de fisioterapia: cuéntanos para quién es y te decimos qué opciones hay.</p>
+      <a class="cta js-regalo" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Preguntar por los bonos</a>
     </div>
-    <a class="cta js-regalo" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Preguntar por los bonos</a>
   </aside>
 
   <p class="ti-nota rv">
