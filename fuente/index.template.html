@@ -443,6 +443,9 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 .prod .cta{margin-top:auto;justify-content:center;background:var(--bone);color:var(--ink);border-color:var(--bone);font-size:10.5px;letter-spacing:.11em;gap:9px;padding:14px 12px;white-space:nowrap}
 .prod .cta svg{width:13px;height:13px}
 .prod .cta:hover{background:transparent;color:var(--bone)}
+.legales{margin:clamp(18px,2.5vh,26px) 0 0;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8b9197;display:flex;gap:8px 22px;flex-wrap:wrap;align-items:center}
+.legales a{color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(243,239,231,.3);padding-bottom:1px}
+.legales a:hover{border-bottom-color:var(--bone)}
 .regalo{margin-top:clamp(26px,4vh,40px);border:1px solid rgba(12,15,18,.12);padding:clamp(22px,3vw,38px);
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(22px,3.5vw,54px)}
 .regalo .rg-foto{position:relative;aspect-ratio:7/6;overflow:hidden;background:#dcd8d0}
@@ -708,6 +711,12 @@ __HEROHTML__
     </article>
   </div>
 
+  <p class="legales">
+    <span>Precios con IVA · Recogida gratis en el centro · Envío a domicilio</span>
+    <a href="/condiciones/">Condiciones de compra</a>
+    <a href="/desistimiento/">Devoluciones en 14 días</a>
+  </p>
+
   <aside class="regalo light rv" aria-labelledby="t-regalo">
     <div class="rg-foto">{{pic:regalo|Tarjeta regalo de ABAY dentro de su estuche negro|(max-width:760px) 92vw, 42vw}}</div>
     <div class="rg-txt">
@@ -764,6 +773,7 @@ __HEROHTML__
       <a href="/aviso-legal/">Aviso legal</a>
       <a href="/privacidad/">Privacidad</a>
       <a href="/cookies/">Cookies</a>
+      <a href="/condiciones/">Condiciones de compra</a>
     </p>
   </footer>
 </section>

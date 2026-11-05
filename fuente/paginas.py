@@ -62,7 +62,7 @@ def pagina(titulo, desc, cuerpo, ruta, indexar=True):
 </main>
 <footer>
   <span>© 2026 ABAY Centro de Entrenamiento, S.L. · A Coruña</span>
-  <a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a><a href="/cookies/">Cookies</a>
+  <a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a><a href="/cookies/">Cookies</a><a href="/condiciones/">Condiciones de compra</a>
 </footer>
 </body>
 </html>
@@ -135,10 +135,102 @@ COOK = P("""<p class="k">Información legal</p>
 <h2>Enlaces externos</h2>
 <p>Los botones de WhatsApp, Instagram y Google te llevan a esas plataformas, que tienen sus propias políticas de cookies.</p>""")
 
-NF = """<p class="k">Error 404</p>
+CONTRA = P(f"""<p class="k">Tienda</p>
+<h1>Condiciones de contratación</h1>
+<p>Estas condiciones regulan la venta de productos y bonos de ABAY Performance Center a distancia, es decir, cuando el pedido se hace por WhatsApp, por email o a través de esta web, sin estar presente en el centro. Al hacer un pedido aceptas lo que viene a continuación. Te recomendamos guardar una copia.</p>
+
+<h2>1. Quién vende</h2>
+<ul>
+<li>Razón social: {E['razon']}</li>
+<li>CIF: {E['cif']}</li>
+<li>Domicilio social: {E['domicilio']}</li>
+<li>Centro y dirección a efectos de devoluciones: {E['direccion']}</li>
+<li>Email: {E['email']} · WhatsApp: +34 624 852 324</li>
+</ul>
+
+<h2>2. Productos y precios</h2>
+<p>Los precios que ves en la tienda están <strong>en euros y con el IVA incluido</strong>. No incluyen los gastos de envío, que se indican aparte y se te confirman antes de que pagues. Antes de cerrar el pedido siempre sabrás el total exacto: producto, talla, envío e importe final.</p>
+<p>Las fotografías son orientativas. El tono de la prenda puede variar ligeramente según la pantalla.</p>
+<p>Las camisetas se venden en tallas XS a XXL y las unidades son limitadas. Si una talla se agota después de que hagas el pedido te avisamos y puedes elegir otra talla o que te devolvamos el dinero.</p>
+
+<h2>3. Cómo se hace un pedido</h2>
+<p>Hoy los pedidos se cierran por WhatsApp: nos dices el producto y la talla, te confirmamos disponibilidad, el total con envío y la forma de pago. El contrato queda formalizado cuando confirmamos el pedido y se completa el pago.</p>
+<p>Cuando la web tenga pago en línea, el proceso será el mismo pero automático, con la confirmación por email.</p>
+
+<h2>4. Formas de pago</h2>
+<p>Admitimos pago en el centro, transferencia bancaria, Bizum y tarjeta. Los pagos con tarjeta y Bizum a distancia se procesan a través de la pasarela de pago segura de nuestra entidad bancaria: los datos de tu tarjeta se introducen directamente en el entorno del banco y <strong>ABAY no los ve ni los almacena en ningún momento</strong>.</p>
+
+<h2>5. Envíos y entrega</h2>
+<p><strong>Recogida en el centro:</strong> gratuita. Te avisamos cuando esté listo y lo recoges en C/ Pedro Galán Calvete, 9.</p>
+<p><strong>Envío a domicilio:</strong> [zonas de envío] por [importe de los gastos de envío]. Plazo estimado de entrega: [plazo] días laborables desde que se confirma el pago.</p>
+<p>Si el pedido se retrasa por encima de ese plazo te informamos y puedes cancelarlo y recuperar el dinero. Revisa el paquete al recibirlo: si llega dañado, dínoslo lo antes posible y nos encargamos.</p>
+
+<h2>6. Derecho de desistimiento</h2>
+<p>Si eres consumidor, tienes <strong>14 días naturales</strong> para devolver el producto sin dar ninguna explicación. El plazo cuenta desde el día en que recibes el pedido.</p>
+<p>Para ejercerlo basta con decírnoslo por email a {E['email']} o por WhatsApp antes de que acaben esos 14 días. Puedes usar el <a href="/desistimiento/">formulario de desistimiento</a>, aunque no es obligatorio. Te confirmaremos la recepción.</p>
+<p>Después tienes 14 días más para devolvernos el producto. Te <strong>devolvemos todo lo que pagaste, incluidos los gastos de envío estándar</strong>, en un plazo máximo de 14 días desde que nos comunicas el desistimiento, por el mismo medio con el que pagaste. Podemos esperar a haber recibido el producto antes de hacer la devolución.</p>
+<p><strong>El coste de devolverlo lo pagas tú</strong>, salvo que el producto llegara defectuoso o equivocado, en cuyo caso lo pagamos nosotros.</p>
+<p>El producto debe volver completo, sin usar más de lo necesario para probarlo y con sus etiquetas. No hay derecho de desistimiento en los servicios ya prestados en su totalidad con tu consentimiento previo expreso (por ejemplo, una sesión de entrenamiento o de fisioterapia ya realizada), tal y como prevé el artículo 103 del texto refundido de la Ley General para la Defensa de los Consumidores y Usuarios.</p>
+
+<h2>7. Cambios de talla</h2>
+<p>Si la talla no te va, escríbenos dentro de los 14 días y te la cambiamos por otra si hay stock. El cambio en el centro es gratuito; si hay que enviarlo, se aplican los gastos de envío del nuevo pedido.</p>
+
+<h2>8. Garantía</h2>
+<p>Los productos tienen la garantía legal de <strong>tres años</strong> por falta de conformidad prevista en el artículo 120 del texto refundido de la Ley General para la Defensa de los Consumidores y Usuarios. Si el producto sale defectuoso, escríbenos y lo reparamos, lo sustituimos o te devolvemos el dinero, según corresponda. No cubre el desgaste normal por el uso ni los daños por un lavado distinto al indicado en la etiqueta.</p>
+
+<h2>9. Tarjeta regalo y bonos</h2>
+<p>La tarjeta regalo es un bono de sesiones de entrenamiento o de fisioterapia. Una vez emitida:</p>
+<ul>
+<li>Es <strong>transferible</strong>: la puede usar la persona a la que se la regales, aunque no sea quien la compró.</li>
+<li><strong>No es canjeable por dinero</strong> ni reembolsable una vez que se ha empezado a usar.</li>
+<li>Tiene una validez de [validez de la tarjeta regalo] desde la fecha de compra. Las sesiones no utilizadas en ese plazo se pierden.</li>
+<li>Las sesiones se reservan con cita previa y están sujetas a disponibilidad de horario.</li>
+<li>Si se compra a distancia y no se ha usado ninguna sesión, se le aplica el derecho de desistimiento de 14 días del punto 6.</li>
+</ul>
+
+<h2>10. Reclamaciones</h2>
+<p>Si algo no ha salido como esperabas, escríbenos a {E['email']} y te respondemos. En el centro hay hojas de reclamaciones oficiales a tu disposición.</p>
+<p>Como consumidor también puedes dirigirte al Instituto Galego do Consumo e da Competencia de la Xunta de Galicia o a la oficina municipal de información al consumidor de tu ayuntamiento. ABAY no está adherida, por el momento, a ninguna junta arbitral de consumo.</p>
+
+<h2>11. Ley aplicable</h2>
+<p>Estas condiciones se rigen por la legislación española. Si eres consumidor, cualquier discrepancia se resolverá ante los juzgados de tu lugar de residencia.</p>
+
+<h2>12. Cambios en estas condiciones</h2>
+<p>Podemos actualizar estas condiciones. A tu pedido se le aplican siempre las que estaban publicadas en el momento en que lo hiciste.</p>
+<p style="margin-top:30px;font-size:13px;color:#8b9197">Última actualización: noviembre de 2026.</p>""")
+
+DESIST = P(f"""<p class="k">Tienda</p>
+<h1>Formulario de desistimiento</h1>
+<p>Si has comprado a distancia y quieres devolver el producto, tienes <strong>14 días naturales</strong> desde que lo recibiste y no hace falta que des ninguna explicación. Puedes usar este modelo, pero no es obligatorio: basta con que nos lo digas de forma clara por email a {E['email']} o por WhatsApp al +34 624 852 324.</p>
+<p>Lee antes el punto 6 de las <a href="/condiciones/">condiciones de contratación</a>, donde se explican los plazos y quién paga el envío de vuelta.</p>
+
+<h2>Modelo</h2>
+<p>Copia este texto, rellena tus datos y envíanoslo:</p>
+<div style="background:#fff;border:1px solid rgba(12,15,18,.14);padding:26px 24px;margin:18px 0 26px;font-size:15px;line-height:1.85">
+<p>A la atención de {E['razon']}, {E['direccion']}, {E['email']}:</p>
+<p>Por la presente le comunico que desisto de mi contrato de venta del siguiente producto:</p>
+<p>Producto y talla: ...........................................................<br>
+Número o fecha del pedido: ...........................................<br>
+Fecha en que lo recibí: ...................................................</p>
+<p>Nombre y apellidos: ......................................................<br>
+Domicilio: ......................................................................<br>
+Email o teléfono de contacto: ........................................</p>
+<p>Fecha: ............................................</p>
+<p>Firma (solo si envías este formulario en papel): ............................................</p>
+</div>
+
+<h2>Qué pasa después</h2>
+<ul>
+<li>Te confirmamos que hemos recibido tu comunicación.</li>
+<li>Tienes 14 días para devolvernos el producto a C/ Pedro Galán Calvete, 9, 15002 A Coruña, o para dejarlo en el centro.</li>
+<li>Te devolvemos el importe íntegro, incluidos los gastos de envío estándar, en un máximo de 14 días y por el mismo medio de pago que usaste.</li>
+<li>El coste de devolver el producto corre por tu cuenta, salvo que llegara defectuoso o equivocado.</li>
+</ul>""")
+
+NF = P("""<p class="k">Error 404</p>
 <h1>Esta página no existe.</h1>
 <p>Puede que el enlace esté mal escrito o que la página se haya movido.</p>
-<p style="margin-top:28px"><a href="/" style="display:inline-block;background:#0c0f12;color:#f8f6f1;padding:14px 24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none">Ir a la portada</a></p>"""
+<p style="margin-top:28px"><a href="/" style="display:inline-block;background:#0c0f12;color:#f8f6f1;padding:14px 24px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none">Ir a la portada</a></p>""")
 
 def generar(out):
     def w(ruta, contenido):
@@ -148,10 +240,12 @@ def generar(out):
     w("aviso-legal/index.html", pagina("Aviso legal", "Aviso legal de ABAY Performance Center.", AVISO, "/aviso-legal/"))
     w("privacidad/index.html", pagina("Política de privacidad", "Política de privacidad de ABAY Performance Center.", PRIV, "/privacidad/"))
     w("cookies/index.html", pagina("Política de cookies", "Política de cookies de ABAY Performance Center.", COOK, "/cookies/"))
+    w("condiciones/index.html", pagina("Condiciones de contratación", "Condiciones de compra de la tienda de ABAY Performance Center: precios, envíos, desistimiento de 14 días, devoluciones, garantía y tarjeta regalo.", CONTRA, "/condiciones/"))
+    w("desistimiento/index.html", pagina("Formulario de desistimiento", "Modelo de formulario para devolver un producto comprado a distancia en ABAY Performance Center dentro de los 14 días.", DESIST, "/desistimiento/"))
     w("404.html", pagina("Página no encontrada", "Página no encontrada.", NF, "/404", indexar=False))
     w("site.webmanifest", '{"name":"ABAY Performance Center","short_name":"ABAY","start_url":"/","display":"standalone","background_color":"#050608","theme_color":"#050608","lang":"es","icons":[{"src":"/apple-touch-icon.png","sizes":"180x180","type":"image/png"},{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml"}]}\n')
     w("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {DOMINIO}/sitemap.xml\n")
-    urls = ["/", "/aviso-legal/", "/privacidad/", "/cookies/"]
+    urls = ["/", "/aviso-legal/", "/privacidad/", "/cookies/", "/condiciones/", "/desistimiento/"]
     w("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"  <url><loc>{DOMINIO}{u}</loc></url>\n" for u in urls) + "</urlset>\n")
     # Cloudflare Pages: caché larga para fuentes e imágenes, cabeceras de seguridad
