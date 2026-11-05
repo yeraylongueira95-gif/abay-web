@@ -35,7 +35,21 @@ cliente a la web: la URL_OK solo se llama si el cliente pulsa ACEPTAR.
 | `supabase/functions/aviso-pago/index.ts` | recibe el aviso de Cecabank y marca el pedido pagado |
 | `prueba-firma.mjs` | comprueba el algoritmo contra el ejemplo del manual |
 
-## Puesta en marcha
+## Puesta en marcha: un solo comando
+
+```
+cd "~/Desktop/Web ABAY"
+bash src/backend/montar.sh
+```
+
+El script entra en Supabase, crea o enlaza el proyecto, crea las tablas, pide
+las claves del TPV (no se ven al escribirlas y no se guardan en el ordenador),
+publica las dos funciones, enciende el carrito en la web, la reconstruye y la
+sube. Al final imprime la URL que hay que pegar en la consola de Cecabank.
+
+Lo de abajo es lo mismo paso a paso, por si algo falla o se quiere hacer a mano.
+
+## Puesta en marcha paso a paso
 
 ### 1. Base de datos
 
