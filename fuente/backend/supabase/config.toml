@@ -1,0 +1,10 @@
+project_id = "abay-tienda"
+
+# El TPV de Cecabank llama a /aviso-pago sin ninguna cabecera de Supabase,
+# y el carrito de la web tampoco manda token: las dos funciones son públicas.
+# La seguridad está en la firma SHA-256 y en que el precio se calcula aquí.
+[functions.crear-pedido]
+verify_jwt = false
+
+[functions.aviso-pago]
+verify_jwt = false

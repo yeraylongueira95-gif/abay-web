@@ -463,6 +463,102 @@ body.nav-in #nav{opacity:1;transform:none;pointer-events:auto}
 @media(max-width:900px){.ti-head{grid-template-columns:1fr;gap:18px}.prods{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.prods{grid-template-columns:1fr;gap:12px}.prod .ph{aspect-ratio:4/5}}
 
+/* ================= CARRITO ================= */
+[hidden]{display:none !important}
+.prod .acciones{margin-top:auto;display:flex;flex-direction:column;gap:9px}
+.prod .cta.js-anadir{display:none}
+body.tienda-viva .prod .cta.js-anadir{display:inline-flex}
+body.tienda-viva .prod .cta.js-pedir{display:none}
+.prod .duda{font-family:var(--fm);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone-dim);text-align:center;display:none}
+body.tienda-viva .prod .duda{display:block}
+.prod .duda a{color:var(--stone);border-bottom:1px solid rgba(154,161,166,.4)}
+.prod .duda a:hover{color:var(--bone);border-bottom-color:var(--bone)}
+.tallas button[disabled]{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.tallas button[disabled]:hover{border-color:rgba(243,239,231,.22);color:var(--stone)}
+.tallas.pide{animation:pideTalla .5s ease}
+@keyframes pideTalla{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+#carFab{
+  position:fixed;z-index:45;left:max(18px,calc(env(safe-area-inset-left) + 18px));bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px));
+  display:flex;align-items:center;gap:11px;height:56px;padding:0 22px;border-radius:28px;
+  background:var(--bone);color:var(--ink);border:1px solid var(--bone);
+  box-shadow:0 10px 30px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.25);
+  font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;
+  transition:opacity .45s ease,transform .45s var(--ease);
+}
+body.con-carrito #carFab{opacity:1;transform:none;pointer-events:auto}
+body.menu-open #carFab,body.lb-open #carFab,body.car-open #carFab{opacity:0;transform:translateY(16px) scale(.9);pointer-events:none}
+#carFab svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5}
+#carFab .n{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--ink);color:var(--bone);font-size:10px;letter-spacing:0}
+
+#carVelo{position:fixed;inset:0;z-index:60;background:rgba(5,6,8,.74);opacity:0;pointer-events:none;transition:opacity .4s ease}
+body.car-open #carVelo{opacity:1;pointer-events:auto}
+#carrito{
+  position:fixed;z-index:61;top:0;right:0;height:100%;height:100dvh;width:min(448px,100%);
+  background:var(--ink);border-left:1px solid var(--line);color:var(--bone);
+  display:flex;flex-direction:column;transform:translateX(103%);transition:transform .5s var(--ease);
+}
+body.car-open #carrito{transform:none}
+#carrito header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line);flex:none}
+#carrito header p{font-family:var(--fm);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber)}
+#carCerrar{background:none;border:0;color:var(--stone);width:34px;height:34px;display:grid;place-items:center;font-size:20px;line-height:1}
+#carCerrar:hover{color:var(--bone)}
+.car-cuerpo{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:22px;-webkit-overflow-scrolling:touch}
+.car-vacio{color:var(--stone);font-size:14.5px;line-height:1.6}
+#carLineas{list-style:none;display:flex;flex-direction:column;gap:16px}
+#carLineas li{display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:center}
+#carLineas .mini{width:62px;height:76px;object-fit:contain;background:#efece6;flex:none}
+#carLineas .nm{font-size:15px;line-height:1.3}
+#carLineas .tl{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-top:4px}
+#carLineas .pr{font-size:14px;color:var(--stone);margin-top:6px}
+.uds{display:flex;align-items:center;gap:2px;border:1px solid rgba(243,239,231,.2)}
+.uds button{background:none;border:0;color:var(--stone);width:28px;height:28px;font-size:15px;line-height:1}
+.uds button:hover{color:var(--bone)}
+.uds span{min-width:22px;text-align:center;font-family:var(--fm);font-size:12px}
+.quitar{background:none;border:0;color:var(--stone-dim);font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-top:7px;padding:0}
+.quitar:hover{color:#d98a8a}
+.car-bloque{border-top:1px solid var(--line);padding-top:20px;display:flex;flex-direction:column;gap:12px}
+.car-bloque > p.tit{font-family:var(--fm);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--stone-dim)}
+.opt{display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(243,239,231,.16);padding:13px 15px;cursor:pointer;transition:border-color .25s}
+.opt:hover{border-color:rgba(243,239,231,.4)}
+.opt input{margin-top:3px;accent-color:#d9bd92;flex:none}
+.opt .et{font-size:14.5px}
+.opt .sub{display:block;color:var(--stone);font-size:12.5px;margin-top:3px;line-height:1.45}
+.opt[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.campos label{display:flex;flex-direction:column;gap:6px;font-family:var(--fm);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-dim)}
+.campos label.ancho{grid-column:1 / -1}
+.campos input,.campos textarea{
+  background:rgba(243,239,231,.04);border:1px solid rgba(243,239,231,.18);color:var(--bone);
+  font-family:var(--fd);font-size:15px;padding:11px 12px;width:100%;border-radius:0;
+}
+.campos input:focus,.campos textarea:focus{outline:0;border-color:var(--amber)}
+.campos textarea{resize:vertical;min-height:62px}
+.acepto{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:var(--stone)}
+.acepto input{margin-top:3px;accent-color:#d9bd92;flex:none}
+.acepto a{color:var(--bone);border-bottom:1px solid rgba(243,239,231,.35)}
+.car-pie{flex:none;border-top:1px solid var(--line);padding:18px 24px max(18px,calc(env(safe-area-inset-bottom) + 18px));display:flex;flex-direction:column;gap:12px;background:var(--ink)}
+.car-sumas{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--stone)}
+.car-sumas div{display:flex;justify-content:space-between;gap:16px}
+.car-sumas .tot{color:var(--bone);font-size:19px;font-weight:300;padding-top:8px;border-top:1px solid var(--line);margin-top:4px}
+.car-pie .cta{justify-content:center;background:var(--bone);color:var(--ink);border-color:var(--bone);width:100%}
+.car-pie .cta:hover{background:transparent;color:var(--bone)}
+.car-pie .cta[disabled]{opacity:.45;pointer-events:none}
+.car-atras{background:none;border:0;color:var(--stone);font-family:var(--fm);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;padding:2px}
+.car-atras:hover{color:var(--bone)}
+.car-aviso{font-size:13px;line-height:1.5;color:#e2a2a2;border:1px solid rgba(226,162,162,.35);padding:11px 13px;display:none}
+.car-aviso.on{display:block}
+.car-seguro{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone-dim);text-align:center;line-height:1.7}
+body.car-paso2 .solo-cesta{display:none}
+body:not(.car-paso2) .solo-datos{display:none}
+@media(max-width:480px){
+  #carLineas li{grid-template-columns:52px 1fr auto;gap:11px}
+  #carLineas .mini{width:52px;height:64px}
+  .campos{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){#carrito,#carVelo,#carFab{transition:none}}
+
 /* ================= WHATSAPP FIJO ================= */
 #waFab{
   position:fixed;z-index:45;right:max(18px,calc(env(safe-area-inset-right) + 18px));bottom:max(18px,calc(env(safe-area-inset-bottom) + 18px));
@@ -506,6 +602,7 @@ body.menu-open #waFab,body.lb-open #waFab{opacity:0;transform:translateY(16px) s
   <symbol id="star" viewBox="0 0 16 16"><path d="M8 1l2.1 4.5 4.9.6-3.6 3.4.9 4.9L8 12l-4.3 2.4.9-4.9L1 6.1l4.9-.6z"/></symbol>
   <symbol id="ext" viewBox="0 0 12 12"><path d="M4 1h7v7M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4.2 19.8l1.1-3.9A8.3 8.3 0 1 1 8.4 19l-4.2.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.2 8.2c.2-.4.5-.4.8-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c-.1.1-.2.3 0 .5.3.6.8 1.2 1.3 1.6.5.5 1 .8 1.6 1.1.2.1.4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5 0 .5-.2 1.1-.6 1.4-.5.4-1.2.6-1.9.5-1.2-.2-2.5-.9-3.7-2-1.1-1.1-2-2.4-2.3-3.6-.2-.8 0-1.6.4-2.1z" fill="currentColor"/></symbol>
+  <symbol id="i-bolsa" viewBox="0 0 24 24"><path d="M4.6 7.5h14.8l-1 12.5a1.6 1.6 0 0 1-1.6 1.5H7.2a1.6 1.6 0 0 1-1.6-1.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.6 10V6.6a3.4 3.4 0 0 1 6.8 0V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
   <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.1" cy="6.9" r="1.1" fill="currentColor"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.8 6.5L12 13l8.2-6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
   <symbol id="goog" viewBox="0 0 24 24"><path fill="#9aa1a6" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#9aa1a6" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" opacity=".75"/><path fill="#9aa1a6" d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2L6.4 14z" opacity=".55"/><path fill="#9aa1a6" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 6 12 6z" opacity=".9"/></symbol>
@@ -678,35 +775,47 @@ __HEROHTML__
   </header>
 
   <div class="prods">
-    <article class="prod neg rv" data-prod="Camiseta negra">
+    <article class="prod neg rv" data-prod="Camiseta negra" data-id="camiseta-negra" data-precio="2999">
       <div class="ph doble"><div class="caras">{{pic:camiseta-negra|Camiseta ABAY negra con el vector y el logotipo en el pecho|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}{{pic:camiseta-negra-espalda|Camiseta ABAY negra vista por la espalda, lisa|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}</div><span class="cara" data-alt="Toca para ver el frente">Toca para ver la espalda</span></div>
       <div class="info">
         <h3>Camiseta negra</h3>
         <p class="desc">Corte oversize, algodón grueso. Vector y logotipo en el pecho.</p>
         <p class="precio"><b>29,99 €</b></p>
         <div class="tallas" role="group" aria-label="Talla de la camiseta negra"></div>
-        <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+        <div class="acciones">
+          <button type="button" class="cta js-anadir"><svg aria-hidden="true"><use href="#i-bolsa"/></svg>Añadir al carrito</button>
+          <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+          <p class="duda">¿Dudas? <a class="js-pedir-duda" href="#" target="_blank" rel="noopener">Pregunta por WhatsApp</a></p>
+        </div>
       </div>
     </article>
 
-    <article class="prod bla rv d1" data-prod="Camiseta blanca">
+    <article class="prod bla rv d1" data-prod="Camiseta blanca" data-id="camiseta-blanca" data-precio="2999">
       <div class="ph doble"><div class="caras">{{pic:camiseta-blanca|Camiseta ABAY blanca, espalda con el logotipo grande|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}{{pic:camiseta-blanca-frente|Camiseta ABAY blanca, frente con el vector granate|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}</div><span class="cara" data-alt="Toca para ver la espalda">Toca para ver el frente</span></div>
       <div class="info">
         <h3>Camiseta blanca</h3>
         <p class="desc">Corte oversize, algodón grueso. Vector granate en el pecho y logotipo grande a la espalda.</p>
         <p class="precio"><b>29,99 €</b></p>
         <div class="tallas" role="group" aria-label="Talla de la camiseta blanca"></div>
-        <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+        <div class="acciones">
+          <button type="button" class="cta js-anadir"><svg aria-hidden="true"><use href="#i-bolsa"/></svg>Añadir al carrito</button>
+          <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+          <p class="duda">¿Dudas? <a class="js-pedir-duda" href="#" target="_blank" rel="noopener">Pregunta por WhatsApp</a></p>
+        </div>
       </div>
     </article>
 
-    <article class="prod tote rv d2" data-prod="Tote bag">
+    <article class="prod tote rv d2" data-prod="Tote bag" data-id="tote" data-precio="1299">
       <div class="ph doble" id="phTote"><div class="caras">{{pic:tote|Tote bag de algodón negra con el logotipo ABAY|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}{{pic:tote-liso|Tote bag de algodón negra vista por el otro lado, lisa|(max-width:620px) 100vw, (max-width:900px) 50vw, 32vw}}</div><span class="cara" data-alt="Toca para ver el logotipo">Toca para ver el otro lado</span></div>
       <div class="info">
         <h3>Tote bag</h3>
         <p class="desc">Bolsa de algodón negra con el logotipo ABAY. Talla única.</p>
         <p class="precio"><b>12,99 €</b></p>
-        <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+        <div class="acciones">
+          <button type="button" class="cta js-anadir"><svg aria-hidden="true"><use href="#i-bolsa"/></svg>Añadir al carrito</button>
+          <a class="cta js-pedir" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</a>
+          <p class="duda">¿Dudas? <a class="js-pedir-duda" href="#" target="_blank" rel="noopener">Pregunta por WhatsApp</a></p>
+        </div>
       </div>
     </article>
   </div>
@@ -779,6 +888,91 @@ __HEROHTML__
 </section>
 </main>
 
+<button id="carFab" type="button" aria-haspopup="dialog" aria-controls="carrito">
+  <svg aria-hidden="true"><use href="#i-bolsa"/></svg>
+  <span>Tu pedido</span><span class="n" id="carNum">0</span>
+</button>
+
+<div id="carVelo"></div>
+<aside id="carrito" role="dialog" aria-modal="true" aria-labelledby="carTit" aria-hidden="true">
+  <header>
+    <p id="carTit">Tu pedido</p>
+    <button id="carCerrar" type="button" aria-label="Cerrar el carrito">&times;</button>
+  </header>
+
+  <div class="car-cuerpo">
+    <p class="car-vacio" id="carVacio">Todavía no has añadido nada.</p>
+    <ul id="carLineas"></ul>
+
+    <div class="car-bloque solo-cesta" id="carEntrega">
+      <p class="tit">Cómo lo recibes</p>
+      <label class="opt">
+        <input type="radio" name="entrega" value="recogida" checked>
+        <span class="et">Recoger en el centro<span class="sub">C/ Pedro Galán Calvete, 9. Te avisamos cuando esté listo. Gratis.</span></span>
+      </label>
+      <label class="opt" id="optEnvio" aria-disabled="true">
+        <input type="radio" name="entrega" value="envio" disabled>
+        <span class="et">Envío a domicilio<span class="sub" id="envioSub">Escríbenos por WhatsApp y te decimos el coste.</span></span>
+      </label>
+    </div>
+
+    <div class="car-bloque solo-datos">
+      <p class="tit">Tus datos</p>
+      <div class="campos">
+        <label class="ancho">Nombre y apellidos<input id="cNombre" type="text" name="name" autocomplete="name" required></label>
+        <label>Email<input id="cEmail" type="email" name="email" autocomplete="email" inputmode="email" required></label>
+        <label>Teléfono<input id="cTel" type="tel" name="tel" autocomplete="tel" inputmode="tel" required></label>
+      </div>
+    </div>
+
+    <div class="car-bloque solo-datos" id="carDir" hidden>
+      <p class="tit">Dirección de envío</p>
+      <div class="campos">
+        <label class="ancho">Calle, número, piso<input id="cDir" type="text" autocomplete="street-address"></label>
+        <label>Código postal<input id="cCp" type="text" inputmode="numeric" maxlength="5" autocomplete="postal-code"></label>
+        <label>Población<input id="cPob" type="text" autocomplete="address-level2"></label>
+        <label class="ancho">Provincia<input id="cProv" type="text" autocomplete="address-level1"></label>
+      </div>
+    </div>
+
+    <div class="car-bloque solo-datos">
+      <p class="tit">Cómo pagas</p>
+      <label class="opt">
+        <input type="radio" name="metodo" value="tarjeta" checked>
+        <span class="et">Tarjeta<span class="sub">Pago seguro en la pasarela de Cecabank. No vemos tu tarjeta en ningún momento.</span></span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="metodo" value="bizum">
+        <span class="et">Bizum<span class="sub">Con el móvil, desde tu banco.</span></span>
+      </label>
+    </div>
+
+    <div class="car-bloque solo-datos">
+      <div class="campos">
+        <label class="ancho">Algo que debamos saber (opcional)<textarea id="cNotas" rows="2" maxlength="500"></textarea></label>
+      </div>
+      <label class="acepto">
+        <input type="checkbox" id="cAcepto">
+        <span>He leído y acepto las <a href="/condiciones/" target="_blank" rel="noopener">condiciones de compra</a>, incluido el <a href="/desistimiento/" target="_blank" rel="noopener">derecho de desistimiento de 14 días</a>.</span>
+      </label>
+    </div>
+
+    <p class="car-aviso" id="carAviso" role="alert"></p>
+  </div>
+
+  <div class="car-pie">
+    <div class="car-sumas">
+      <div><span>Productos</span><span id="carSub">0,00 €</span></div>
+      <div id="carFilaEnvio" hidden><span id="carEnvioEt">Envío</span><span id="carEnvio">0,00 €</span></div>
+      <div class="tot"><span>Total</span><span id="carTotal">0,00 €</span></div>
+    </div>
+    <button class="cta solo-cesta" id="carSeguir" type="button">Continuar</button>
+    <button class="cta solo-datos" id="carPagar" type="button">Pagar</button>
+    <button class="car-atras solo-datos" id="carVolver" type="button">&larr; Volver a la cesta</button>
+    <p class="car-seguro">IVA incluido · Pago seguro con Cecabank</p>
+  </div>
+</aside>
+
 <a id="waFab" class="js-wa" href="https://wa.me/34624852324?text=Hola%20ABAY%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20centro.%20Mi%20consulta%20es%3A%20" target="_blank" rel="noopener" aria-label="Reserva por WhatsApp: 624 852 324"><span class="ico"><svg aria-hidden="true"><use href="#i-wa"/></svg></span><span class="lbl">Reserva por WhatsApp</span></a>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Foto ampliada">
@@ -806,6 +1000,11 @@ var DATOS = {
   googleResenas: "https://maps.google.com/?cid=8503096604516644059",
   googleEscribir:"https://search.google.com/local/writereview?placeid=ChIJXxoDO799Lg0R23QLe08RAXY"
 };
+
+/* Tienda: mientras "api" esté vacío la web pide por WhatsApp, como hasta ahora.
+   Al pegar aquí la URL de las funciones de Supabase se enciende el carrito.
+   Ej: "https://abcdefgh.supabase.co/functions/v1"                           */
+var TIENDA = { api: "" };
 
 var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 var $ = function(s){ return document.querySelector(s); };
@@ -1015,15 +1214,36 @@ cards.forEach(function(c){
   });
 });
 
-/* ---------- tienda: talla + pedido por WhatsApp ---------- */
+/* ---------- tienda: tallas, carrito y pago ---------- */
 var TALLAS = ["XS","S","M","L","XL","XXL"];
+var CAT = null;                 /* catálogo y stock, los manda el servidor */
+var CESTA = [];
+
+function euros(c){ return (c/100).toFixed(2).replace('.', ',') + ' €'; }
+function leerCesta(){
+  try{ var j = JSON.parse(localStorage.getItem('abay-cesta') || '[]'); return Array.isArray(j) ? j : []; }
+  catch(e){ return []; }
+}
+function guardarCesta(){ try{ localStorage.setItem('abay-cesta', JSON.stringify(CESTA)); }catch(e){} }
+function hayStock(id, talla){
+  if(!CAT || !CAT.stock || !CAT.stock[id]) return 0;
+  var n = CAT.stock[id][talla];
+  return typeof n === 'number' ? n : 0;
+}
+
+/* ----- tarjetas ----- */
 document.querySelectorAll('.prod').forEach(function(card){
-  var cont = card.querySelector('.tallas');
-  var elegida = null;
+  var id     = card.getAttribute('data-id');
+  var nombre = card.getAttribute('data-prod');
+  var precio = parseInt(card.getAttribute('data-precio'), 10) || 0;
+  var cont   = card.querySelector('.tallas');
+  var elegida = cont ? null : 'U';
+
   if(cont){
     TALLAS.forEach(function(t){
       var b = document.createElement('button');
-      b.type = 'button'; b.textContent = t; b.setAttribute('aria-pressed','false');
+      b.type = 'button'; b.textContent = t;
+      b.setAttribute('aria-pressed','false'); b.setAttribute('data-talla', t);
       b.addEventListener('click', function(){
         cont.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
         b.setAttribute('aria-pressed','true'); elegida = t; pedir();
@@ -1031,6 +1251,7 @@ document.querySelectorAll('.prod').forEach(function(card){
       cont.appendChild(b);
     });
   }
+
   /* sin ratón (móvil) la otra cara se ve tocando la foto */
   var doble = card.querySelector('.ph.doble');
   if(doble && matchMedia('(hover:none)').matches){
@@ -1040,15 +1261,252 @@ document.querySelectorAll('.prod').forEach(function(card){
       if(cara){ var otro = cara.getAttribute('data-alt'); cara.setAttribute('data-alt', cara.textContent); cara.textContent = otro; }
     });
   }
-  var a = card.querySelector('.js-pedir');
+
   function pedir(){
-    var prod = card.getAttribute('data-prod');
-    var txt = "Hola ABAY, quiero " + (prod.indexOf('Camiseta') === 0 ? "la " : "el ") + prod.toLowerCase() +
-              (elegida ? ", talla " + elegida : "") + ". ¿Me confirmáis disponibilidad?";
-    a.href = DATOS.whatsapp ? ("https://wa.me/" + DATOS.whatsapp + "?text=" + encodeURIComponent(txt)) : "#";
+    var txt = "Hola ABAY, quiero " + (nombre.indexOf('Camiseta') === 0 ? "la " : "el ") + nombre.toLowerCase() +
+              (elegida && elegida !== 'U' ? ", talla " + elegida : "") + ". ¿Me confirmáis disponibilidad?";
+    var href = DATOS.whatsapp ? ("https://wa.me/" + DATOS.whatsapp + "?text=" + encodeURIComponent(txt)) : "#";
+    card.querySelectorAll('.js-pedir, .js-pedir-duda').forEach(function(a){ a.href = href; });
   }
   pedir();
+
+  card.querySelector('.js-anadir').addEventListener('click', function(){
+    if(cont && !elegida){
+      cont.classList.remove('pide'); void cont.offsetWidth; cont.classList.add('pide');
+      return;
+    }
+    var talla = elegida || 'U';
+    var img = card.querySelector('.ph img');
+    anadir({ id:id, nombre:nombre, talla:talla, precio:precio, img: img ? (img.currentSrc || img.src) : '' });
+  });
+
+  /* tallas agotadas */
+  card.__stock = function(){
+    if(!cont) return;
+    cont.querySelectorAll('button').forEach(function(b){
+      var t = b.getAttribute('data-talla');
+      var n = hayStock(id, t);
+      b.disabled = n <= 0;
+      b.title = n <= 0 ? 'Agotada' : (n <= 3 ? 'Quedan ' + n : '');
+      if(b.disabled && elegida === t){ elegida = null; b.setAttribute('aria-pressed','false'); }
+    });
+  };
 });
+
+/* ----- panel ----- */
+var carrito = $('#carrito'), velo = $('#carVelo'), fab = $('#carFab');
+var elLineas = $('#carLineas'), elVacio = $('#carVacio');
+var btnPagar = $('#carPagar'), btnSeguir = $('#carSeguir'), elAviso = $('#carAviso');
+
+function aviso(t){
+  if(!t){ elAviso.classList.remove('on'); elAviso.textContent = ''; return; }
+  elAviso.textContent = t; elAviso.classList.add('on');
+  elAviso.scrollIntoView({ block:'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+}
+function abrirCarrito(){
+  document.body.classList.add('car-open');
+  carrito.setAttribute('aria-hidden','false');
+  setTimeout(function(){ $('#carCerrar').focus(); }, 120);
+}
+function cerrarCarrito(){
+  document.body.classList.remove('car-open','car-paso2');
+  carrito.setAttribute('aria-hidden','true');
+  aviso('');
+}
+fab.addEventListener('click', abrirCarrito);
+velo.addEventListener('click', cerrarCarrito);
+$('#carCerrar').addEventListener('click', cerrarCarrito);
+addEventListener('keydown', function(e){ if(e.key === 'Escape' && document.body.classList.contains('car-open')) cerrarCarrito(); });
+
+function entregaElegida(){
+  var r = carrito.querySelector('input[name="entrega"]:checked');
+  return r ? r.value : 'recogida';
+}
+function metodoElegido(){
+  var r = carrito.querySelector('input[name="metodo"]:checked');
+  return r ? r.value : 'tarjeta';
+}
+
+function anadir(art){
+  var tope = CAT ? hayStock(art.id, art.talla) : 5;
+  var linea = null;
+  CESTA.forEach(function(l){ if(l.id === art.id && l.talla === art.talla) linea = l; });
+  var actuales = linea ? linea.uds : 0;
+  if(actuales + 1 > Math.min(tope, 5)){
+    abrirCarrito();
+    aviso(tope <= 0 ? 'Esa talla se ha agotado.' : 'No podemos servir más unidades de esa talla.');
+    return;
+  }
+  if(linea) linea.uds++;
+  else CESTA.push({ id:art.id, nombre:art.nombre, talla:art.talla, precio:art.precio, img:art.img, uds:1 });
+  guardarCesta(); pintarCesta(); aviso(''); abrirCarrito();
+}
+
+function cambiar(i, d){
+  var l = CESTA[i]; if(!l) return;
+  var tope = CAT ? Math.min(hayStock(l.id, l.talla), 5) : 5;
+  var n = l.uds + d;
+  if(n < 1){ CESTA.splice(i, 1); }
+  else if(n > tope){ aviso('No hay más unidades disponibles.'); return; }
+  else { l.uds = n; }
+  guardarCesta(); pintarCesta(); aviso('');
+}
+
+function pintarCesta(){
+  elLineas.innerHTML = '';
+  CESTA.forEach(function(l, i){
+    var li = document.createElement('li');
+    var tallaTxt = l.talla === 'U' ? 'Talla única' : 'Talla ' + l.talla;
+    li.innerHTML =
+      (l.img ? '<img class="mini" src="' + l.img + '" alt="" loading="lazy">' : '<span class="mini"></span>') +
+      '<div><p class="nm"></p><p class="tl"></p><p class="pr"></p>' +
+      '<button type="button" class="quitar">Quitar</button></div>' +
+      '<div class="uds"><button type="button" aria-label="Quitar una unidad">−</button>' +
+      '<span>' + l.uds + '</span>' +
+      '<button type="button" aria-label="Añadir una unidad">+</button></div>';
+    li.querySelector('.nm').textContent = l.nombre;
+    li.querySelector('.tl').textContent = tallaTxt;
+    li.querySelector('.pr').textContent = euros(l.precio * l.uds);
+    li.querySelector('.quitar').addEventListener('click', function(){ CESTA.splice(i,1); guardarCesta(); pintarCesta(); });
+    var bs = li.querySelectorAll('.uds button');
+    bs[0].addEventListener('click', function(){ cambiar(i, -1); });
+    bs[1].addEventListener('click', function(){ cambiar(i, 1); });
+    elLineas.appendChild(li);
+  });
+
+  var uds = CESTA.reduce(function(n, l){ return n + l.uds; }, 0);
+  var sub = CESTA.reduce(function(n, l){ return n + l.precio * l.uds; }, 0);
+  var envio = (entregaElegida() === 'envio' && CAT && CAT.envio_cent != null) ? CAT.envio_cent : 0;
+
+  elVacio.hidden = uds > 0;
+  $('#carNum').textContent = uds;
+  $('#carSub').textContent = euros(sub);
+  $('#carFilaEnvio').hidden = entregaElegida() !== 'envio';
+  $('#carEnvio').textContent = envio ? euros(envio) : 'Gratis';
+  $('#carTotal').textContent = euros(sub + envio);
+  btnPagar.textContent = 'Pagar ' + euros(sub + envio);
+  btnSeguir.disabled = uds === 0;
+  btnPagar.disabled = uds === 0;
+  $('#carDir').hidden = entregaElegida() !== 'envio';
+  document.body.classList.toggle('con-carrito', uds > 0 && document.body.classList.contains('tienda-viva'));
+  if(uds === 0) document.body.classList.remove('car-paso2');
+}
+
+carrito.querySelectorAll('input[name="entrega"]').forEach(function(r){
+  r.addEventListener('change', function(){ pintarCesta(); aviso(''); });
+});
+btnSeguir.addEventListener('click', function(){
+  document.body.classList.add('car-paso2'); aviso('');
+  carrito.querySelector('.car-cuerpo').scrollTop = 0;
+  setTimeout(function(){ $('#cNombre').focus(); }, 80);
+});
+$('#carVolver').addEventListener('click', function(){
+  document.body.classList.remove('car-paso2'); aviso('');
+  carrito.querySelector('.car-cuerpo').scrollTop = 0;
+});
+
+/* ----- pago ----- */
+btnPagar.addEventListener('click', function(){
+  if(!TIENDA.api) return;
+  var entrega = entregaElegida();
+  var cliente = {
+    nombre: $('#cNombre').value.trim(),
+    email:  $('#cEmail').value.trim(),
+    telefono: $('#cTel').value.trim(),
+    notas:  $('#cNotas').value.trim()
+  };
+  if(cliente.nombre.length < 2) return faltaDato('#cNombre', 'Escribe tu nombre.');
+  if(!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(cliente.email)) return faltaDato('#cEmail', 'Revisa el email.');
+  if(cliente.telefono.replace(/\D/g, '').length < 9) return faltaDato('#cTel', 'Revisa el teléfono.');
+  if(entrega === 'envio'){
+    cliente.direccion = $('#cDir').value.trim();
+    cliente.cp = $('#cCp').value.trim();
+    cliente.poblacion = $('#cPob').value.trim();
+    cliente.provincia = $('#cProv').value.trim();
+    if(cliente.direccion.length < 5) return faltaDato('#cDir', 'Falta la dirección.');
+    if(!/^\d{5}$/.test(cliente.cp)) return faltaDato('#cCp', 'El código postal son 5 cifras.');
+    if(cliente.poblacion.length < 2) return faltaDato('#cPob', 'Falta la población.');
+    if(cliente.provincia.length < 2) return faltaDato('#cProv', 'Falta la provincia.');
+  }
+  if(!$('#cAcepto').checked) return aviso('Para seguir hay que aceptar las condiciones de compra.');
+
+  aviso('');
+  var textoBoton = btnPagar.textContent;
+  btnPagar.disabled = true; btnPagar.textContent = 'Conectando con el banco…';
+
+  fetch(TIENDA.api + '/crear-pedido', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      lineas: CESTA.map(function(l){ return { producto:l.id, talla:l.talla, unidades:l.uds }; }),
+      entrega: entrega, metodo: metodoElegido(), cliente: cliente, acepta: true
+    })
+  }).then(function(r){
+    return r.json().then(function(j){ return { ok:r.ok, j:j }; });
+  }).then(function(res){
+    if(!res.ok || !res.j || !res.j.ok){
+      btnPagar.disabled = false; btnPagar.textContent = textoBoton;
+      aviso((res.j && res.j.error) || 'No se pudo iniciar el pago. Inténtalo otra vez.');
+      if(res.j && res.j.error && /agotad|quedan/i.test(res.j.error)) cargarCatalogo();
+      return;
+    }
+    try{ localStorage.setItem('abay-pedido', JSON.stringify({ ref:res.j.ref, total:res.j.total_cent })); }catch(e){}
+    var f = document.createElement('form');
+    f.method = 'POST'; f.action = res.j.action; f.style.display = 'none';
+    f.acceptCharset = 'UTF-8';
+    Object.keys(res.j.campos).forEach(function(k){
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = k; i.value = res.j.campos[k];
+      f.appendChild(i);
+    });
+    document.body.appendChild(f);
+    f.submit();
+  }).catch(function(){
+    btnPagar.disabled = false; btnPagar.textContent = textoBoton;
+    aviso('No hemos podido conectar. Comprueba tu conexión o escríbenos por WhatsApp.');
+  });
+});
+
+function faltaDato(sel, texto){
+  aviso(texto);
+  var el = $(sel); if(el){ el.focus(); }
+}
+
+/* ----- catálogo ----- */
+function cargarCatalogo(){
+  if(!TIENDA.api) return;
+  fetch(TIENDA.api + '/crear-pedido', { method:'GET' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.ok || !d.abierto) return;
+      CAT = d;
+      document.body.classList.add('tienda-viva');
+      document.querySelectorAll('.prod').forEach(function(c){ if(c.__stock) c.__stock(); });
+      if(d.envio_cent != null){
+        var opt = $('#optEnvio');
+        opt.setAttribute('aria-disabled','false');
+        opt.querySelector('input').disabled = false;
+        $('#envioSub').textContent = (d.envio_texto || 'Envío a domicilio') + ' · ' + euros(d.envio_cent);
+        $('#carEnvioEt').textContent = 'Envío';
+      }
+      /* fuera de la cesta lo que ya no exista o se haya agotado */
+      CESTA = CESTA.filter(function(l){
+        if(!d.productos[l.id]) return false;
+        l.precio = d.productos[l.id].precio_cent;
+        l.nombre = d.productos[l.id].nombre;
+        var n = hayStock(l.id, l.talla);
+        if(n <= 0) return false;
+        if(l.uds > n) l.uds = n;
+        return true;
+      });
+      guardarCesta(); pintarCesta();
+    })
+    .catch(function(){ /* si falla, la tienda sigue funcionando por WhatsApp */ });
+}
+
+CESTA = leerCesta();
+pintarCesta();
+cargarCatalogo();
 
 /* ---------- regala ABAY ---------- */
 (function(){

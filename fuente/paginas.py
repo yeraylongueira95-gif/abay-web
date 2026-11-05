@@ -34,9 +34,12 @@ ul{padding-left:20px}
 footer{border-top:1px solid rgba(12,15,18,.1);padding:28px clamp(20px,5vw,84px);font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9197;display:flex;gap:10px 26px;flex-wrap:wrap}
 footer a{text-decoration:none}
 footer a:hover{color:#0c0f12}
+.ref{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;background:#fff;border:1px solid rgba(12,15,18,.14);padding:14px 18px;display:inline-block;margin:6px 0 26px}
+.btn{display:inline-block;background:#0c0f12;color:#f8f6f1;padding:14px 24px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;margin:6px 10px 0 0}
+.btn.ghost{background:transparent;color:#0c0f12;border:1px solid rgba(12,15,18,.28)}
 """
 
-def pagina(titulo, desc, cuerpo, ruta, indexar=True):
+def pagina(titulo, desc, cuerpo, ruta, indexar=True, extra=""):
     spark = open(os.path.join(os.path.dirname(__file__), "..", "sitio", "favicon.svg")).read()
     d = spark.split('<path d="')[1].split('"')[0]
     robots = "" if indexar else '<meta name="robots" content="noindex">\n'
@@ -60,6 +63,7 @@ def pagina(titulo, desc, cuerpo, ruta, indexar=True):
 <main>
 {cuerpo}
 </main>
+{extra}
 <footer>
   <span>© 2026 ABAY Centro de Entrenamiento, S.L. · A Coruña</span>
   <a href="/aviso-legal/">Aviso legal</a><a href="/privacidad/">Privacidad</a><a href="/cookies/">Cookies</a><a href="/condiciones/">Condiciones de compra</a>
@@ -227,6 +231,43 @@ Email o teléfono de contacto: ........................................</p>
 <li>El coste de devolver el producto corre por tu cuenta, salvo que llegara defectuoso o equivocado.</li>
 </ul>""")
 
+GRACIAS = P("""<p class="k">Tienda</p>
+<h1>Pago recibido.</h1>
+<p>Gracias. Hemos recibido tu pago y tu pedido ya est\u00e1 en nuestra lista.</p>
+<p id="refBox" hidden>Tu referencia:</p>
+<p><span class="ref" id="ref" hidden></span></p>
+
+<h2>Qu\u00e9 pasa ahora</h2>
+<ul>
+<li>Te escribimos un email con el detalle del pedido.</li>
+<li>Si eliges recogida, te avisamos en cuanto est\u00e9 listo en C/ Pedro Gal\u00e1n Calvete, 9.</li>
+<li>Si eliges env\u00edo, te mandamos el seguimiento cuando salga.</li>
+</ul>
+<p>Si en unas horas no te llega nada, escr\u00edbenos por WhatsApp al +34 624 852 324 o a info@abay.es con tu referencia y lo miramos.</p>
+<p>Puedes devolverlo en 14 d\u00edas: lo tienes explicado en las <a href="/condiciones/">condiciones de compra</a>.</p>
+<p style="margin-top:28px"><a class="btn" href="/">Volver a la web</a><a class="btn ghost" href="/#tienda">Seguir en la tienda</a></p>""")
+
+GRACIAS_JS = """<script>
+(function(){
+  try{
+    localStorage.removeItem('abay-cesta');
+    var d = JSON.parse(localStorage.getItem('abay-pedido') || 'null');
+    if(d && d.ref){
+      var r = document.getElementById('ref');
+      r.textContent = d.ref; r.hidden = false;
+      document.getElementById('refBox').hidden = false;
+    }
+  }catch(e){}
+})();
+</script>"""
+
+ERROR = P("""<p class="k">Tienda</p>
+<h1>El pago no se<br>ha completado.</h1>
+<p><strong>No se te ha cobrado nada.</strong> Puede ser que el banco no autorizara la operaci\u00f3n, que se cancelara la pantalla de pago o que caducara el tiempo.</p>
+<p>Tu cesta sigue guardada: vuelve a la tienda y vuelve a intentarlo. Si se repite, prueba con otra tarjeta o con Bizum.</p>
+<p>Y si prefieres, lo cerramos por WhatsApp al +34 624 852 324 y lo dejamos resuelto en un minuto.</p>
+<p style="margin-top:28px"><a class="btn" href="/#tienda">Volver a la tienda</a><a class="btn ghost" href="/">Ir a la portada</a></p>""")
+
 NF = P("""<p class="k">Error 404</p>
 <h1>Esta página no existe.</h1>
 <p>Puede que el enlace esté mal escrito o que la página se haya movido.</p>
@@ -241,6 +282,8 @@ def generar(out):
     w("privacidad/index.html", pagina("Política de privacidad", "Política de privacidad de ABAY Performance Center.", PRIV, "/privacidad/"))
     w("cookies/index.html", pagina("Política de cookies", "Política de cookies de ABAY Performance Center.", COOK, "/cookies/"))
     w("condiciones/index.html", pagina("Condiciones de contratación", "Condiciones de compra de la tienda de ABAY Performance Center: precios, envíos, desistimiento de 14 días, devoluciones, garantía y tarjeta regalo.", CONTRA, "/condiciones/"))
+    w("pedido/gracias/index.html", pagina("Pago recibido", "Confirmación de un pedido de la tienda de ABAY Performance Center.", GRACIAS, "/pedido/gracias/", indexar=False, extra=GRACIAS_JS))
+    w("pedido/error/index.html", pagina("El pago no se ha completado", "El pago del pedido no ha podido completarse.", ERROR, "/pedido/error/", indexar=False))
     w("desistimiento/index.html", pagina("Formulario de desistimiento", "Modelo de formulario para devolver un producto comprado a distancia en ABAY Performance Center dentro de los 14 días.", DESIST, "/desistimiento/"))
     w("404.html", pagina("Página no encontrada", "Página no encontrada.", NF, "/404", indexar=False))
     w("site.webmanifest", '{"name":"ABAY Performance Center","short_name":"ABAY","start_url":"/","display":"standalone","background_color":"#050608","theme_color":"#050608","lang":"es","icons":[{"src":"/apple-touch-icon.png","sizes":"180x180","type":"image/png"},{"src":"/favicon.svg","sizes":"any","type":"image/svg+xml"}]}\n')
@@ -255,7 +298,7 @@ def generar(out):
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   X-Frame-Options: SAMEORIGIN
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src 'none'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src 'none'; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self' https://pgw.ceca.es https://tpv.ceca.es; frame-ancestors 'self'
 
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
