@@ -1,1 +1,5 @@
 fuente/.tmp/
+
+# El CLI de Supabase guarda aquí la URL con la contraseña de la base de datos
+fuente/backend/supabase/.temp/
+**/supabase/.temp/

@@ -61,12 +61,12 @@ fi
 [ -n "$REF" ] || { err "sin proyecto no se puede seguir"; exit 1; }
 
 cd "$SUPA"
-supabase link --project-ref "$REF"
+supabase link --project-ref "$REF" --yes
 ok "proyecto enlazado: $REF"
 
 # ---------------------------------------------------------------- 3
 titulo "3. Crear las tablas"
-if supabase db push; then
+if supabase db push --remote --yes; then
   ok "tablas creadas"
 else
   err "no se han podido crear desde aquí"
@@ -103,7 +103,7 @@ umask 077
   [ -n "$MAILAVISO" ] && echo "EMAIL_AVISOS=$MAILAVISO"
   [ -n "$MAILAVISO" ] && echo "EMAIL_REMITE=pedidos@abayperformance.com"
 } > "$ENVF"
-supabase secrets set --env-file "$ENVF"
+supabase secrets set --env-file "$ENVF" --yes
 rm -f "$ENVF"
 unset CLAVE RESEND
 ok "claves guardadas en Supabase (y borradas de este ordenador)"

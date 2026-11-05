@@ -35,6 +35,32 @@ cliente a la web: la URL_OK solo se llama si el cliente pulsa ACEPTAR.
 | `supabase/functions/aviso-pago/index.ts` | recibe el aviso de Cecabank y marca el pedido pagado |
 | `prueba-firma.mjs` | comprueba el algoritmo contra el ejemplo del manual |
 
+## Estado del montaje (5 nov 2026)
+
+Ya hecho, no hay que repetirlo:
+
+- Proyecto de Supabase **ABAY tienda**, referencia `gqwacqkyvecuojkfgxiq`, región París (eu-west-3).
+  Panel: https://supabase.com/dashboard/project/gqwacqkyvecuojkfgxiq
+- Tablas y función `confirmar_pedido` aplicadas (`db push`).
+- Las dos funciones publicadas y el catálogo respondiendo en
+  `https://gqwacqkyvecuojkfgxiq.supabase.co/functions/v1/crear-pedido`
+- Contraseña de la base de datos: en `clave-base-de-datos-supabase.txt`, en la
+  raíz de *Web ABAY* (fuera del repositorio). **Pásala al gestor de contraseñas
+  y borra el archivo.**
+
+Lo que falta, en un comando:
+
+```bash
+cd ~/Desktop/"Web ABAY" && bash src/backend/claves-tpv.sh
+```
+
+Pide las cuatro claves del TPV, las guarda como secretos en Supabase, prueba
+que la firma sale bien, enciende el carrito en la web y la publica. Mientras no
+se lance, la web sigue pidiendo por WhatsApp: no hay nada roto de cara al
+público.
+
+---
+
 ## Puesta en marcha: un solo comando
 
 ```
